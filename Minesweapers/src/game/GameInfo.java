@@ -31,61 +31,7 @@ public class GameInfo extends VBox {
 	public GridPane getGrid() {
 		return grid;
 	}
-	
-	private void generateGrid() {
-		for(int i = 0; i < W; i++) {
-			ColumnConstraints column = new ColumnConstraints();
-			column.setPercentWidth(100/(W+2));
-			grid.getColumnConstraints().add(column);
-		}
-		
-		grid.setPrefSize(Global.FRAME_WIDTH, (Global.FRAME_HEIGHT/(H+2))*3);
-		grid.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-		
-		for(int i = 1; i < (W+1); i++) {
-			grid.add(new ImageView(Global.BORDER_TOP_SIDE){{
-				setFitWidth(Global.FRAME_WIDTH/(W+2));
-				setFitHeight(Global.FRAME_HEIGHT/(H+2));
-			}}, i, 0);
-			grid.add(new ImageView(Global.BORDER_HUD){{
-				setFitWidth(Global.FRAME_WIDTH/(W+2));
-				setFitHeight(Global.FRAME_HEIGHT/(H+2));
-			}}, i, 1);
-			grid.add(new ImageView(Global.BORDER_HUD){{
-				setFitWidth(Global.FRAME_WIDTH/(W+2));
-				setFitHeight(Global.FRAME_HEIGHT/(H+2));
-			}}, i, 2);
-		}
-		grid.add(new ImageView(Global.BORDER_CORNER_TL){{
-			setFitWidth(Global.FRAME_WIDTH/(W+2));
-			setFitHeight(Global.FRAME_HEIGHT/(H+2));
-		}}, 0, 0);
-		grid.add(new ImageView(Global.BORDER_CORNER_TR){{
-			setFitWidth(Global.FRAME_WIDTH/(W+2));
-			setFitHeight(Global.FRAME_HEIGHT/(H+2));
-		}}, W+1, 0);
-		grid.add(new ImageView(Global.BORDER_LEFT_SIDE){{
-			setFitWidth(Global.FRAME_WIDTH/(W+2));
-			setFitHeight(Global.FRAME_HEIGHT/(H+2));
-		}}, 0, 1);
-		grid.add(new ImageView(Global.BORDER_LEFT_SIDE){{
-			setFitWidth(Global.FRAME_WIDTH/(W+2));
-			setFitHeight(Global.FRAME_HEIGHT/(H+2));
-		}}, 0, 2);
-		grid.add(new ImageView(Global.BORDER_RIGHT_SIDE){{
-			setFitWidth(Global.FRAME_WIDTH/(W+2));
-			setFitHeight(Global.FRAME_HEIGHT/(H+2));
-		}}, W+1, 1);
-		grid.add(new ImageView(Global.BORDER_RIGHT_SIDE){{
-			setFitWidth(Global.FRAME_WIDTH/(W+2));
-			setFitHeight(Global.FRAME_HEIGHT/(H+2));
-		}}, W+1, 2);
-	}
-	
-//	public void setMinesLeft(int minesLeft) {
-//		this.minesLeft.setText(Integer.toString(minesLeft));
-//	}
-	
+
 	public void updateMines(int h, int t, int o) {
 		String hS = Global.number.get(h);
 		String tS = Global.number.get(t);
@@ -106,15 +52,9 @@ public class GameInfo extends VBox {
 	}
 	
 	public void updateTime(int h, int t, int o) {
-		System.out.println(h);
-		System.out.println(t);
-		System.out.println(o);
 		String hS = Global.number.get(h);
 		String tS = Global.number.get(t);
 		String oS = Global.number.get(o);
-		System.out.println(hS);
-		System.out.println(tS);
-		System.out.println(oS);
 		grid.add(new ImageView(hS){{
 			setFitWidth(Global.FRAME_WIDTH/(W+2));
 			setFitHeight(Global.FRAME_HEIGHT/(H+2)*2);
@@ -168,5 +108,55 @@ public class GameInfo extends VBox {
 	
 	public void stopClock() {
 		clockStarted = false;
+	}
+	
+	private void generateGrid() {
+		for(int i = 0; i < W; i++) {
+			ColumnConstraints column = new ColumnConstraints();
+			column.setPercentWidth(100/(W+2));
+			grid.getColumnConstraints().add(column);
+		}
+		
+		grid.setPrefSize(Global.FRAME_WIDTH, (Global.FRAME_HEIGHT/(H+2))*3);
+		grid.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+		
+		for(int i = 1; i < (W+1); i++) {
+			grid.add(new ImageView(Global.BORDER_TOP_SIDE){{
+				setFitWidth(Global.FRAME_WIDTH/(W+2));
+				setFitHeight(Global.FRAME_HEIGHT/(H+2));
+			}}, i, 0);
+			grid.add(new ImageView(Global.BORDER_HUD){{
+				setFitWidth(Global.FRAME_WIDTH/(W+2));
+				setFitHeight(Global.FRAME_HEIGHT/(H+2));
+			}}, i, 1);
+			grid.add(new ImageView(Global.BORDER_HUD){{
+				setFitWidth(Global.FRAME_WIDTH/(W+2));
+				setFitHeight(Global.FRAME_HEIGHT/(H+2));
+			}}, i, 2);
+		}
+		grid.add(new ImageView(Global.BORDER_CORNER_TL){{
+			setFitWidth(Global.FRAME_WIDTH/(W+2));
+			setFitHeight(Global.FRAME_HEIGHT/(H+2));
+		}}, 0, 0);
+		grid.add(new ImageView(Global.BORDER_CORNER_TR){{
+			setFitWidth(Global.FRAME_WIDTH/(W+2));
+			setFitHeight(Global.FRAME_HEIGHT/(H+2));
+		}}, W+1, 0);
+		grid.add(new ImageView(Global.BORDER_LEFT_SIDE){{
+			setFitWidth(Global.FRAME_WIDTH/(W+2));
+			setFitHeight(Global.FRAME_HEIGHT/(H+2));
+		}}, 0, 1);
+		grid.add(new ImageView(Global.BORDER_LEFT_SIDE){{
+			setFitWidth(Global.FRAME_WIDTH/(W+2));
+			setFitHeight(Global.FRAME_HEIGHT/(H+2));
+		}}, 0, 2);
+		grid.add(new ImageView(Global.BORDER_RIGHT_SIDE){{
+			setFitWidth(Global.FRAME_WIDTH/(W+2));
+			setFitHeight(Global.FRAME_HEIGHT/(H+2));
+		}}, W+1, 1);
+		grid.add(new ImageView(Global.BORDER_RIGHT_SIDE){{
+			setFitWidth(Global.FRAME_WIDTH/(W+2));
+			setFitHeight(Global.FRAME_HEIGHT/(H+2));
+		}}, W+1, 2);
 	}
 }
