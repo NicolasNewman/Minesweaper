@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="4.0" prefHeight="200.0" prefWidth="200.0" spacing="10.0">
+         <children>
+            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="21.0" prefWidth="95.0" text="Minesweaper">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Button fx:id="easy" mnemonicParsing="false" onAction="#easyClicked" text="   Easy   " />
+            <Button fx:id="medium" mnemonicParsing="false" onAction="#mediumClicked" text="Medium" />
+            <Button fx:id="hard" mnemonicParsing="false" onAction="#hardClicked" text="   Hard   " />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
