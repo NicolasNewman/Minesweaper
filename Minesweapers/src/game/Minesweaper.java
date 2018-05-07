@@ -71,6 +71,7 @@ public class Minesweaper {
 //		});
 		
 		mineCount = (int) ((W*H) * (tempMineCount/100.0));
+
 		flagsRemaining = mineCount;
 		tiles = new ImageView[W][H];
 		state = new TileState[W][H];
@@ -78,30 +79,37 @@ public class Minesweaper {
 		if(W == H) {
 			for(int i = 32; i > 0; i--) {
 				if(i*W <= 800) {
-					Global.FRAME_WIDTH = i*W;
-					Global.FRAME_HEIGHT = i*H;
+					Global.FRAME_WIDTH = i*(W+2);
+					Global.FRAME_HEIGHT = i*(H+2);
+					Global.TILE_HEIGHT = i;
+					Global.TILE_WIDTH = i;
 					break;
 				}
 			}
 		}
 		
-		for(int i = 0; i < W; i++) {
+		for(int i = 0; i < W+2; i++) {
 			ColumnConstraints column = new ColumnConstraints();
-			column.setPercentWidth(100/W);
+			column.setPercentWidth(100/(W+2));
 			grid.getColumnConstraints().add(column);
 		}
-		for(int i = 0; i < H; i++) {
+		for(int i = 0; i < H+2; i++) {
 			RowConstraints row = new RowConstraints();
-			row.setPercentHeight(100/H);
+			row.setPercentHeight(100/(H+2));
 			grid.getRowConstraints().add(row);
 		}
 		grid.setPrefSize(Global.FRAME_WIDTH, Global.FRAME_HEIGHT);
 		grid.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 		
-		//info = new GameInfo();
-		//vbox.getChildren().add(info);
+		info = new GameInfo(W, H);
+		
+		info.updateMines((mineCount/ 100) % 10, 
+				(mineCount / 10) % 10, 
+				mineCount % 10);
+		
+		vbox.getChildren().add(info.getGrid());
 		vbox.getChildren().add(grid);
-		Scene scene = new Scene(vbox, Global.FRAME_WIDTH, Global.FRAME_HEIGHT);
+		Scene scene = new Scene(vbox, Global.FRAME_WIDTH, Global.FRAME_HEIGHT+(Global.TILE_HEIGHT*3));
 		
 		generateField();
 		generateMines();
@@ -113,15 +121,56 @@ public class Minesweaper {
 	}
 	
 	private void generateField() {
+		for(int i = 0; i < W+2; i++) {
+			if (i > 0 && i < W+1) {
+				grid.add(new ImageView(Global.BORDER_BOTTOM_SIDE){{
+					setFitWidth(Global.FRAME_WIDTH/(W+2));
+					setFitHeight(Global.FRAME_HEIGHT/(H+2));
+				}}, i, 0);
+				grid.add(new ImageView(Global.BORDER_BOTTOM_SIDE){{
+					setFitWidth(Global.FRAME_WIDTH/(W+2));
+					setFitHeight(Global.FRAME_HEIGHT/(H+2));
+				}}, i, H+1);
+			}
+		}
+		for(int j = 0; j < H+2; j++) {
+			if (j > 0 && j < H+1) {
+				grid.add(new ImageView(Global.BORDER_LEFT_SIDE){{
+					setFitWidth(Global.FRAME_WIDTH/(W+2));
+					setFitHeight(Global.FRAME_HEIGHT/(H+2));
+				}}, 0, j);
+				grid.add(new ImageView(Global.BORDER_RIGHT_SIDE){{
+					setFitWidth(Global.FRAME_WIDTH/(W+2));
+					setFitHeight(Global.FRAME_HEIGHT/(H+2));
+				}}, W+1, j);
+			}
+		}
+		grid.add(new ImageView(Global.BORDER_LEFT_T){{
+			setFitWidth(Global.FRAME_WIDTH/(W+2));
+			setFitHeight(Global.FRAME_HEIGHT/(H+2));
+		}}, 0, 0);
+		grid.add(new ImageView(Global.BORDER_RIGHT_T){{
+			setFitWidth(Global.FRAME_WIDTH/(W+2));
+			setFitHeight(Global.FRAME_HEIGHT/(H+2));
+		}}, W+1, 0);
+		grid.add(new ImageView(Global.BORDER_CORNER_BL){{
+			setFitWidth(Global.FRAME_WIDTH/(W+2));
+			setFitHeight(Global.FRAME_HEIGHT/(H+2));
+		}}, 0, H+1);
+		grid.add(new ImageView(Global.BORDER_CORNER_BR){{
+			setFitWidth(Global.FRAME_WIDTH/(W+2));
+			setFitHeight(Global.FRAME_HEIGHT/(H+2));
+		}}, W+1, H+1);
+		
 		for(int i = 0; i < tiles.length; i++) {
 			for(int j = 0; j < tiles[0].length; j++) {
 				tiles[i][j] = new ImageView(Global.TILE_UNCLICKED);
 				tiles[i][j].setUserData(new int[] {i, j});
 				state[i][j] = TileState.UNCLICKED;
-				grid.add(tiles[i][j], i, j);
+				grid.add(tiles[i][j], i+1, j+1);
 				
-				tiles[i][j].setFitWidth(Global.FRAME_WIDTH/W);
-				tiles[i][j].setFitHeight(Global.FRAME_HEIGHT/H);
+				tiles[i][j].setFitWidth(Global.FRAME_WIDTH/(W+2));
+				tiles[i][j].setFitHeight(Global.FRAME_HEIGHT/(H+2));
 				
 				tiles[i][j].setOnMousePressed((event) -> {
 					if(!gameOver) {
@@ -161,6 +210,7 @@ public class Minesweaper {
 								} else if(s.equals(TileState.MINE)) {
 									((ImageView) img).setImage(new Image(Global.TILE_MINE));
 									stage.setTitle("You lost");
+									info.stopClock();
 									gameOver = true;
 									for(int x = 0; x < tiles.length; x++) {
 										for(int y = 0; y < tiles[0].length; y++) {
@@ -232,6 +282,9 @@ public class Minesweaper {
 											state[cords[0]][cords[1]] = TileState.FLAG;
 										}
 										flagsRemaining--;
+										info.updateMines((flagsRemaining/ 100) % 10, 
+												(flagsRemaining / 10) % 10, 
+												flagsRemaining % 10);
 										stage.setTitle("Flags remaining: " + flagsRemaining);
 										if(flagsRemaining == 0) {
 											int correctCount = 0;
@@ -245,6 +298,7 @@ public class Minesweaper {
 											if(correctCount == mineCount) {
 												gameOver = true;
 												stage.setTitle("You win!");
+												info.stopClock();
 											}
 										}
 									}
@@ -272,6 +326,9 @@ public class Minesweaper {
 										state[cords[0]][cords[1]] = TileState.UNCLICKED;
 									}
 									flagsRemaining++;
+									info.updateMines((flagsRemaining/ 100) % 10, 
+											(flagsRemaining / 10) % 10, 
+											flagsRemaining % 10);
 									stage.setTitle("Flags remaining: " + flagsRemaining);
 								}
 							}
