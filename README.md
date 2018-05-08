@@ -6,6 +6,7 @@ All resources were created by me however anyone can use them if needed for their
 ### TODO:
 * Proper scaling of the board so it doesn't have to be NxN
 * Custom field option
-* Clock can go past 999
+* Clock can go past 999 (without adding four digits to HUD?)
 * Keep track of high scores
 * High scores are stored on a global leaderboard
+* Add comments
