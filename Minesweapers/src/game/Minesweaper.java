@@ -1,8 +1,9 @@
 package game;
 
+import java.util.ArrayList;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -28,6 +29,7 @@ public class Minesweaper {
 	private int flagsRemaining = 10;
 	private double tempMineCount;
 	private boolean gameOver = false;
+	private boolean firstClick = true;
 	
 	public Minesweaper(int W, int H, int tempMineCount) {
 		this.W = W;
@@ -103,7 +105,7 @@ public class Minesweaper {
 		
 		info = new GameInfo(W, H);
 		
-		info.updateMines((mineCount/ 100) % 10, 
+		info.updateMines((mineCount / 100) % 10, 
 				(mineCount / 10) % 10, 
 				mineCount % 10);
 		
@@ -112,7 +114,7 @@ public class Minesweaper {
 		Scene scene = new Scene(vbox, Global.FRAME_WIDTH, Global.FRAME_HEIGHT+(Global.TILE_HEIGHT*3));
 		
 		generateField();
-		generateMines();
+		//generateMines();
 		
 		//grid.add(info, 0, 0);
 
@@ -173,7 +175,16 @@ public class Minesweaper {
 				tiles[i][j].setFitHeight(Global.FRAME_HEIGHT/(H+2));
 				
 				tiles[i][j].setOnMousePressed((event) -> {
-					if(!gameOver) {
+					if (firstClick) {
+						Object img = event.getSource();
+						if(img instanceof ImageView) {
+							int[] cords = (int[]) ((ImageView) img).getUserData();
+							generateMines(cords[0], cords[1]);
+							updateTile(cords[0], cords[1], Global.TILE_EMPTY, TileState.EMPTY);
+							checkSurroundingUnclicked(cords[0], cords[1]);
+						}
+						firstClick = false;
+					} else if(!gameOver) {
 						Object img = event.getSource();
 						if(img instanceof ImageView) {
 							int[] cords = (int[]) ((ImageView) img).getUserData();
@@ -339,7 +350,16 @@ public class Minesweaper {
 		}
 	}
 	
-	private void generateMines() {
+	private void generateMines(int x, int y) {
+		ArrayList<int[]> nullRegion = new ArrayList<>();
+		for(int i = -1; i <= 1; i++) {
+			for(int j = -1; j <= 1; j++) {
+				if(i >= 0 && i < W && j >= 0 && j < H) {
+					printCords(i,j);
+					nullRegion.add(new int[] {i, j});
+				}
+			}
+		}
 		int i = 0;
 		int j = 0;
 		int placedMines = 0;
@@ -352,7 +372,7 @@ public class Minesweaper {
 				j = 0;
 			}
 			if(Math.random() < 0.05) {
-				if(!state[i][j].equals(TileState.MINE)) {
+				if(!state[i][j].equals(TileState.MINE) && !nullRegion.contains(new int[] {i, j})) {
 					state[i][j] = TileState.MINE;
 					placedMines++;
 				}
