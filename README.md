@@ -13,3 +13,4 @@ All resources were created by me however anyone can use them if needed for their
 
 ### Bugs:
 * 10x10 sometimes only generates 9 mines instead of 10.
+* Clock will count for one more tick after winning
