@@ -1,4 +1,4 @@
-package game;
+package game.helper;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -104,6 +104,10 @@ public class GameInfo extends VBox {
 			this.t = new Thread(t);
 			this.t.start();
 		}
+	}
+	
+	public int getTimeInSeconds() {
+		return time;
 	}
 	
 	public void stopClock() {

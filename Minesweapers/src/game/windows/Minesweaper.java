@@ -1,9 +1,16 @@
-package game;
+package game.windows;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
+import game.enums.Difficulty;
+import game.enums.TileState;
+import game.helper.GameInfo;
+import game.helper.Global;
+import game.save_data.DataManager;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -22,6 +29,7 @@ public class Minesweaper {
 	private GameInfo info;
 	private ImageView[][] tiles;
 	private TileState[][] state;
+	private DataManager dataManager = new DataManager(Global.DATA_PATH);
 	
 	private int H = 10;
 	private int W = 10;
@@ -30,11 +38,14 @@ public class Minesweaper {
 	private double tempMineCount;
 	private boolean gameOver = false;
 	private boolean firstClick = true;
+	private final boolean DEBUG_MODE = true;
+	private final Difficulty diff;
 	
-	public Minesweaper(int W, int H, int tempMineCount) {
+	public Minesweaper(int W, int H, int tempMineCount, Difficulty diff) {
 		this.W = W;
 		this.H = H;
 		this.tempMineCount = tempMineCount;
+		this.diff = diff;
 		createWindow();
 	}
 	
@@ -158,10 +169,18 @@ public class Minesweaper {
 		grid.add(new ImageView(Global.BORDER_CORNER_BL){{
 			setFitWidth(Global.FRAME_WIDTH/(W+2));
 			setFitHeight(Global.FRAME_HEIGHT/(H+2));
+			setOnMouseClicked((event) -> {
+				if(!firstClick) {
+					DEBUG_showMines();
+				}
+			});
 		}}, 0, H+1);
 		grid.add(new ImageView(Global.BORDER_CORNER_BR){{
 			setFitWidth(Global.FRAME_WIDTH/(W+2));
 			setFitHeight(Global.FRAME_HEIGHT/(H+2));
+			setOnMouseClicked((event) -> {
+				DEBUG_printHighscore();
+			});
 		}}, W+1, H+1);
 		
 		for(int i = 0; i < tiles.length; i++) {
@@ -310,6 +329,17 @@ public class Minesweaper {
 												gameOver = true;
 												stage.setTitle("You win!");
 												info.stopClock();
+												int time = info.getTimeInSeconds();
+												TextInputDialog usernameDialog = new TextInputDialog("name");
+												usernameDialog.setTitle("Leaderboard");
+												usernameDialog.setHeaderText("Please enter your name");
+												usernameDialog.setContentText("Name:");
+															
+												Optional<String> usernameResult = usernameDialog.showAndWait();
+												usernameResult.ifPresent(name -> {
+													dataManager.write(name, diff.toString(), Integer.toString(time));
+												});
+												 
 											}
 										}
 									}
@@ -473,6 +503,25 @@ public class Minesweaper {
 					}
 				}
 			}
+		}
+	}
+	
+	public void DEBUG_showMines() {
+		if(DEBUG_MODE) {
+			for(int i = 0; i < tiles.length; i++) {
+				for(int j = 0; j < tiles.length; j++) {
+					if(!state[i][j].equals(TileState.MINE)) {
+						updateTile(i, j, Global.TILE_EMPTY, TileState.EMPTY);
+					}
+				}
+			}
+		}
+	}
+	
+	public void DEBUG_printHighscore() {
+		if(DEBUG_MODE) {
+			dataManager.readToObservableList();
+			dataManager.DEBUG_printMap();
 		}
 	}
 	

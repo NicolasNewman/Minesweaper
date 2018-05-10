@@ -1,4 +1,4 @@
-package game;
+package game.helper;
 
 import java.util.HashMap;
 
@@ -7,6 +7,8 @@ public class Global {
 	public static int FRAME_HEIGHT; // 885
 	public static int TILE_WIDTH;
 	public static int TILE_HEIGHT;
+	
+	public final static String DATA_PATH = "src/data/data.txt";
 	
 	public final static String TILE_ONE = "res/tile_one.jpg";
 	public final static String TILE_TWO = "res/tile_two.jpg";
