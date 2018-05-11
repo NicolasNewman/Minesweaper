@@ -7,6 +7,8 @@ import game.enums.Difficulty;
 import game.helper.Global;
 import game.save_data.DataManager;
 import game.save_data.PlayerScore;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -21,7 +23,7 @@ public class Leaderboard {
 	private Parent root;
 	private Stage stage;
 	private TabPane tabPane = new TabPane();
-	private TableView[] tables = new TableView[3];
+	private TableView<PlayerScore>[] tables = new TableView[3];
 	private VBox vbox = new VBox();
 	
 	public Leaderboard() {
@@ -50,18 +52,32 @@ public class Leaderboard {
 			scoreCol.setPrefWidth(100);
 			tables[i].getColumns().add(nameCol);
 			tables[i].getColumns().add(scoreCol);
-			tables[i].setItems(m.readToObservableList());
+			
+			
+			ObservableList<PlayerScore> observableList = m.readToObservableList();
+			SortedList<PlayerScore> sortedList = new SortedList<>(observableList,
+					(PlayerScore s1, PlayerScore s2) -> {
+						if(s1.getScoreIntForDifficulty(diffOrder[indx]) > s2.getScoreIntForDifficulty(diffOrder[indx])) {
+							return 1;
+						} else if (s1.getScoreIntForDifficulty(diffOrder[indx]) < s2.getScoreIntForDifficulty(diffOrder[indx])) {
+							return -1;
+						} else {
+							return 0;
+						}
+					});
+			
+			tables[i].setItems(sortedList);
 			tabs[i].setContent(tables[i]);
 			
 			ArrayList<PlayerScore> scoresToRemove = new ArrayList<PlayerScore>();
 			Consumer<PlayerScore> consumer = name -> {
-				System.out.println(name.getName() + " : " + name.getScoreIntForDifficulty(diffOrder[indx]));
 				if(name.getScoreIntForDifficulty(diffOrder[indx]) == -1) {
-					scoresToRemove.add(name);
+					observableList.remove(name);
 				}
 			};
 			tables[i].getItems().forEach(consumer);
-			scoresToRemove.forEach((item) -> tables[indx].getItems().remove(item));
+
+			scoresToRemove.forEach((item) -> observableList.remove(item));
 		}
 		
 		tabPane.getTabs().add(easyTab);

@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import game.enums.Difficulty;
 import game.enums.TileState;
-import game.helper.GameInfo;
 import game.helper.Global;
 import game.save_data.DataManager;
 import javafx.scene.Parent;
@@ -161,6 +160,11 @@ public class Minesweaper {
 		grid.add(new ImageView(Global.BORDER_LEFT_T){{
 			setFitWidth(Global.FRAME_WIDTH/(W+2));
 			setFitHeight(Global.FRAME_HEIGHT/(H+2));
+			setOnMouseClicked((event) -> {
+				if(!firstClick) {
+					DEBUG_flagMines();
+				}
+			});
 		}}, 0, 0);
 		grid.add(new ImageView(Global.BORDER_RIGHT_T){{
 			setFitWidth(Global.FRAME_WIDTH/(W+2));
@@ -170,6 +174,17 @@ public class Minesweaper {
 			setFitWidth(Global.FRAME_WIDTH/(W+2));
 			setFitHeight(Global.FRAME_HEIGHT/(H+2));
 			setOnMouseClicked((event) -> {
+				//TOOD: Not working
+//				if(event.isPrimaryButtonDown()) {
+//					System.out.println("Here2");
+//					if(!firstClick) {
+//						DEBUG_showMines();
+//					}
+//				} else if(event.isSecondaryButtonDown()) {
+//					if(!firstClick) {
+//						DEBUG_flagMines();
+//					}
+//				}
 				if(!firstClick) {
 					DEBUG_showMines();
 				}
@@ -509,9 +524,25 @@ public class Minesweaper {
 	public void DEBUG_showMines() {
 		if(DEBUG_MODE) {
 			for(int i = 0; i < tiles.length; i++) {
-				for(int j = 0; j < tiles.length; j++) {
-					if(!state[i][j].equals(TileState.MINE)) {
+				for(int j = 0; j < tiles[0].length; j++) {
+					if(!state[i][j].equals(TileState.MINE) && !state[i][j].equals(TileState.MINEFLAG)) {
 						updateTile(i, j, Global.TILE_EMPTY, TileState.EMPTY);
+					}
+				}
+			}
+		}
+	}
+	
+	public void DEBUG_flagMines() {
+		if(DEBUG_MODE) {
+			for(int i = 0; i < tiles.length; i++) {
+				for(int j = 0; j < tiles[0].length; j++) {
+					if(state[i][j].equals(TileState.MINE)) {
+						updateTile(i, j, Global.TILE_FLAG, TileState.MINEFLAG);
+						flagsRemaining--;
+						info.updateMines((flagsRemaining/ 100) % 10, 
+								(flagsRemaining / 10) % 10, 
+								flagsRemaining % 10);
 					}
 				}
 			}

@@ -1,5 +1,7 @@
-package game.helper;
+package game.windows;
 
+import game.helper.Global;
+import game.helper.Timer;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.image.ImageView;
