@@ -115,9 +115,10 @@ public class Minesweaper {
 		
 		info = new GameInfo(W, H);
 		
-		info.updateMines((mineCount / 100) % 10, 
-				(mineCount / 10) % 10, 
-				mineCount % 10);
+		info.updateMines(((flagsRemaining / 1000) % 10), 
+				(flagsRemaining / 100) % 10, 
+				(flagsRemaining / 10) % 10, 
+				flagsRemaining % 10);
 		
 		vbox.getChildren().add(info.getGrid());
 		vbox.getChildren().add(grid);
@@ -327,7 +328,8 @@ public class Minesweaper {
 											state[cords[0]][cords[1]] = TileState.FLAG;
 										}
 										flagsRemaining--;
-										info.updateMines((flagsRemaining/ 100) % 10, 
+										info.updateMines(((flagsRemaining / 1000) % 10), 
+												(flagsRemaining / 100) % 10, 
 												(flagsRemaining / 10) % 10, 
 												flagsRemaining % 10);
 										stage.setTitle("Flags remaining: " + flagsRemaining);
@@ -382,7 +384,8 @@ public class Minesweaper {
 										state[cords[0]][cords[1]] = TileState.UNCLICKED;
 									}
 									flagsRemaining++;
-									info.updateMines((flagsRemaining/ 100) % 10, 
+									info.updateMines(((flagsRemaining / 1000) % 10), 
+											(flagsRemaining/ 100) % 10, 
 											(flagsRemaining / 10) % 10, 
 											flagsRemaining % 10);
 									stage.setTitle("Flags remaining: " + flagsRemaining);
@@ -540,7 +543,8 @@ public class Minesweaper {
 					if(state[i][j].equals(TileState.MINE)) {
 						updateTile(i, j, Global.TILE_FLAG, TileState.MINEFLAG);
 						flagsRemaining--;
-						info.updateMines((flagsRemaining/ 100) % 10, 
+						info.updateMines(((flagsRemaining / 1000) % 10), 
+								(flagsRemaining / 100) % 10, 
 								(flagsRemaining / 10) % 10, 
 								flagsRemaining % 10);
 					}

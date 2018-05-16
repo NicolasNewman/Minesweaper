@@ -24,8 +24,8 @@ public class GameInfo extends VBox {
 		this.H = H;
 		
 		generateGrid();
-		updateTime(0, 0, 0);
-		updateMines(0, 0, 0);
+		updateTime(0, 0, 0, 0);
+		updateMines(0, 0, 0, 0);
 		startClock();
 		
 	}
@@ -34,11 +34,16 @@ public class GameInfo extends VBox {
 		return grid;
 	}
 
-	public void updateMines(int h, int t, int o) {
+	public void updateMines(int th, int h, int t, int o) {
+		String thS = Global.number.get(th);
 		String hS = Global.number.get(h);
 		String tS = Global.number.get(t);
 		String oS = Global.number.get(o);
 		
+		grid.add(new ImageView(thS){{
+			setFitWidth(Global.FRAME_WIDTH/(W+2));
+			setFitHeight(Global.FRAME_HEIGHT/(H+2)*2);
+		}}, W-3, 1, 1, 2);
 		grid.add(new ImageView(hS){{
 			setFitWidth(Global.FRAME_WIDTH/(W+2));
 			setFitHeight(Global.FRAME_HEIGHT/(H+2)*2);
@@ -53,22 +58,28 @@ public class GameInfo extends VBox {
 		}}, W, 1, 1, 2);
 	}
 	
-	public void updateTime(int h, int t, int o) {
+	public void updateTime(int th, int h, int t, int o) {
+		String thS = Global.number.get(th);
 		String hS = Global.number.get(h);
 		String tS = Global.number.get(t);
 		String oS = Global.number.get(o);
-		grid.add(new ImageView(hS){{
+		
+		grid.add(new ImageView(thS){{
 			setFitWidth(Global.FRAME_WIDTH/(W+2));
 			setFitHeight(Global.FRAME_HEIGHT/(H+2)*2);
 		}}, 1, 1, 1, 2);
-		grid.add(new ImageView(tS){{
+		grid.add(new ImageView(hS){{
 			setFitWidth(Global.FRAME_WIDTH/(W+2));
 			setFitHeight(Global.FRAME_HEIGHT/(H+2)*2);
 		}}, 2, 1, 1, 2);
-		grid.add(new ImageView(oS){{
+		grid.add(new ImageView(tS){{
 			setFitWidth(Global.FRAME_WIDTH/(W+2));
 			setFitHeight(Global.FRAME_HEIGHT/(H+2)*2);
 		}}, 3, 1, 1, 2);
+		grid.add(new ImageView(oS){{
+			setFitWidth(Global.FRAME_WIDTH/(W+2));
+			setFitHeight(Global.FRAME_HEIGHT/(H+2)*2);
+		}}, 4, 1, 1, 2);
 	}
 	
 	public void startClock() {
@@ -83,22 +94,29 @@ public class GameInfo extends VBox {
 						Thread.sleep(1000);
 						time = (int) t.getTimeInSeconds();
 						
+						String thS = Global.number.get((time / 1000) % 10);
 						String hS = Global.number.get((time / 100) % 10);
 						String tS = Global.number.get((time / 10) % 10);
 						String oS = Global.number.get(time % 10);
+						//System.out.println(((time / 1000) % 10) + "" + ((time / 100) % 10) + "" + ((time / 10) % 10) + "" + (time % 10));
 						
-						Platform.runLater(() -> grid.add(new ImageView(hS){{
+						
+						Platform.runLater(() -> grid.add(new ImageView(thS){{
 							setFitWidth(Global.FRAME_WIDTH/(W+2));
 							setFitHeight(Global.FRAME_HEIGHT/(H+2)*2);
 						}}, 1, 1, 1, 2));
-						Platform.runLater(() -> grid.add(new ImageView(tS){{
+						Platform.runLater(() -> grid.add(new ImageView(hS){{
 							setFitWidth(Global.FRAME_WIDTH/(W+2));
 							setFitHeight(Global.FRAME_HEIGHT/(H+2)*2);
 						}}, 2, 1, 1, 2));
-						Platform.runLater(() -> grid.add(new ImageView(oS){{
+						Platform.runLater(() -> grid.add(new ImageView(tS){{
 							setFitWidth(Global.FRAME_WIDTH/(W+2));
 							setFitHeight(Global.FRAME_HEIGHT/(H+2)*2);
 						}}, 3, 1, 1, 2));
+						Platform.runLater(() -> grid.add(new ImageView(oS){{
+							setFitWidth(Global.FRAME_WIDTH/(W+2));
+							setFitHeight(Global.FRAME_HEIGHT/(H+2)*2);
+						}}, 4, 1, 1, 2));
 					}
 					return null;
 				}

@@ -10,6 +10,9 @@ import java.util.stream.Stream;
 import game.enums.Difficulty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
 
 public class DataManager {
 	
@@ -37,6 +40,7 @@ public class DataManager {
 		try(Stream<String> stream = Files.lines(Paths.get(path))) {
 			stream.forEach((x) -> {
 				x = DataEncrypter.decrypt(x, key);
+				System.out.println(x);
 				String[] lines = x.split("\n");
 				for(String l : lines) {
 					// 0=name 1=diff 2=score
@@ -72,6 +76,16 @@ public class DataManager {
 	public void DEBUG_printMap() {
 		nameMap.forEach((s, p) -> {
 			System.out.println(s + ": " + p.getEasyScore());
+		});
+	}
+	
+	public void dataCurrupted() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setContentText("The score data is courrupted. Would you like to wipe it?");
+		alert.showAndWait().ifPresent(response -> {
+			if(response == ButtonType.OK) {
+				System.out.println("wipe data");
+			}
 		});
 	}
 
