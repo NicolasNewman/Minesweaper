@@ -8,9 +8,14 @@ public class Global {
 	public static int TILE_WIDTH;
 	public static int TILE_HEIGHT;
 	
-	public final static String DATA_PATH = "src/data/data.txt";
-	public final static String IV_PATH = "src/data/iv.txt";
-	public final static String KEY_PATH = "src/data/key.txt";
+	public final static String USER_NAME = System.getProperty("user.name");
+	public final static String GAME_PATH = "C:\\Users\\"+ USER_NAME +"\\Documents\\my games\\Minesweaper-QP\\";
+	public final static String GAME_DATA_PATH = GAME_PATH + "\\data\\";
+	
+	
+	public final static String DATA_PATH = GAME_DATA_PATH + "data.txt";
+	public final static String IV_PATH = GAME_DATA_PATH + "iv.txt";
+	public final static String KEY_PATH = GAME_DATA_PATH + "key.txt";
 	
 	public final static String TILE_ONE = "res/tile_one.jpg";
 	public final static String TILE_TWO = "res/tile_two.jpg";
