@@ -175,7 +175,7 @@ public class Minesweaper {
 			setFitWidth(Global.FRAME_WIDTH/(W+2));
 			setFitHeight(Global.FRAME_HEIGHT/(H+2));
 			setOnMouseClicked((event) -> {
-				//TOOD: Not working
+				//TODO: Not working
 //				if(event.isPrimaryButtonDown()) {
 //					System.out.println("Here2");
 //					if(!firstClick) {
@@ -462,38 +462,6 @@ public class Minesweaper {
 			}
 		}
 	}
-	
-	/*private void uncoverTiles(int startX, int startY) {
-		int uncoverAmount = (int) ((H*W)*0.1);
-		int r = 0;
-		while(uncoverAmount > 0) {
-			//System.out.println(uncoverAmount);
-			for(int i = -1-r; i <= 1+r; i++) {
-				for(int j = -1-r; j < 1+r; j++) {
-					if(startX+i >= 0 && startX+i < tiles.length && startY+j >= 0 && startY+j < tiles[0].length) {
-						//printCords(startX+i, startY+j);
-						if(state[startX+i][startY+j].equals(TileState.UNCLICKED)) {
-							tiles[startX+i][startY+j].setImage(new Image(Global.TILE_EMPTY));
-							uncoverAmount--;
-						} else if(state[startX+i][startY+j].equals(TileState.ONEUNCLICKED)) {
-							state[startX+i][startY+j]= TileState.ONE;
-							tiles[startX+i][startY+j].setImage(new Image(Global.TILE_ONE));
-							uncoverAmount--;
-						} else if(state[startX+i][startY+j].equals(TileState.TWOUNCLICKED)) {
-							state[startX+i][startY+j]= TileState.TWO;
-							tiles[startX+i][startY+j].setImage(new Image(Global.TILE_TWO));
-							uncoverAmount--;
-						} else if(state[startX+i][startY+j].equals(TileState.THREEUNCLICKED)) {
-							state[startX+i][startY+j]= TileState.THREE;
-							tiles[startX+i][startY+j].setImage(new Image(Global.TILE_THREE));
-							uncoverAmount--;
-						}
-					}
-				}
-			}
-			r++;
-		}
-	}*/
 	
 	public void checkSurroundingUnclicked(int x, int y) {
 		for(int i = -1; i <= 1; i++) {

@@ -28,6 +28,7 @@ public class Leaderboard {
 	private Stage stage;
 	private TabPane tabPane = new TabPane();
 	private TableView<PlayerScore>[] tables = new TableView[3];
+	private DataManager m;
 	private VBox vbox = new VBox();
 	
 	public Leaderboard() {
@@ -43,7 +44,7 @@ public class Leaderboard {
 		Tab[] tabs = new Tab[] {easyTab, mediumTab, hardTab};
 		Difficulty[] diffOrder = {Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD};
 		
-		DataManager m = new DataManager(Global.DATA_PATH);
+		m = new DataManager(Global.DATA_PATH);
 		
 		try {
 			for(int i = 0; i < tables.length; i++) {
@@ -93,10 +94,13 @@ public class Leaderboard {
 			stage.setScene(scene);
 			stage.show();
 		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
 			dataCurrupted();
 		} catch (NullPointerException e) {
+			e.printStackTrace();
 			dataCurrupted();
 		} catch (ArrayIndexOutOfBoundsException e) {
+			e.printStackTrace();
 			dataCurrupted();
 		}
 	}
@@ -107,7 +111,7 @@ public class Leaderboard {
 		alert.setHeaderText("Error");
 		alert.showAndWait().ifPresent(response -> {
 			if(response == ButtonType.OK) {
-				System.out.println("wipe data");
+				m.wipe();
 			}
 		});
 	}

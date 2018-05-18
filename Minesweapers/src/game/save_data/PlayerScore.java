@@ -86,36 +86,4 @@ public class PlayerScore {
 	public void setHardScore(int score) {
 		this.hardScore.set(score);
 	}
-	
-//	public void addScore(Difficulty diff, String score) {
-//		if(scoreMap.containsKey(diff)) {
-//			if(Integer.parseInt(scoreMap.get(diff)) > Integer.parseInt(score)) {
-//				scoreMap.put(diff, score);
-//			}
-//		} else {
-//			scoreMap.put(diff, score);
-//		}
-//	}
-	
-//	public String getScore(Difficulty diff) {
-//		return scoreMap.get(diff);
-//	}
-	
-//	public static boolean containsName(ArrayList<PlayerScore> scores, String name) {
-//		for(PlayerScore p : scores) {
-//			if(p.getName().equals(name)) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
-//	
-//	public static int findIndexOfName(ArrayList<PlayerScore> scores, String name) {
-//		for(int i = 0; i < scores.size(); i++) {
-//			if(scores.get(i).getName().equals(name)) {
-//				return i;
-//			}
-//		}
-//		return -1;
-//	}
 }

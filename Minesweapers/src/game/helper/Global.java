@@ -9,6 +9,8 @@ public class Global {
 	public static int TILE_HEIGHT;
 	
 	public final static String DATA_PATH = "src/data/data.txt";
+	public final static String IV_PATH = "src/data/iv.txt";
+	public final static String KEY_PATH = "src/data/key.txt";
 	
 	public final static String TILE_ONE = "res/tile_one.jpg";
 	public final static String TILE_TWO = "res/tile_two.jpg";
