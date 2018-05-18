@@ -1,4 +1,4 @@
-# Minesweaper
+# Minesweeper
 
 A Minesweaper application made using Java and JFX. 
 All resources were created by me however anyone can use them if needed for their own projects.
