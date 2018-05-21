@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import game.enums.Difficulty;
 import game.enums.TileState;
+import game.helper.Debugger;
 import game.helper.Global;
 import game.save_data.DataManager;
 import javafx.scene.Parent;
@@ -37,7 +38,6 @@ public class Minesweaper {
 	private double tempMineCount;
 	private boolean gameOver = false;
 	private boolean firstClick = true;
-	private final boolean DEBUG_MODE = true;
 	private final Difficulty diff;
 	
 	public Minesweaper(int W, int H, int tempMineCount, Difficulty diff) {
@@ -99,7 +99,12 @@ public class Minesweaper {
 				}
 			}
 		}
-		
+		Debugger.DEBUG_print("Create Field", "W set to " + W, true);
+		Debugger.DEBUG_print("Create Field", "FRAME_WIDTH set to " + Global.FRAME_WIDTH, true);
+		Debugger.DEBUG_print("Create Field", "TILE_WIDTH set to " + Global.TILE_WIDTH, true);
+		Debugger.DEBUG_print("Create Field", "H set to " + H, true);
+		Debugger.DEBUG_print("Create Field", "FRAME_HEIGHT set to " + Global.FRAME_HEIGHT, true);
+		Debugger.DEBUG_print("Create Field", "TILE_HEIGHT set to " + Global.TILE_HEIGHT, true);
 		for(int i = 0; i < W+2; i++) {
 			ColumnConstraints column = new ColumnConstraints();
 			column.setPercentWidth(100/(W+2));
@@ -175,17 +180,6 @@ public class Minesweaper {
 			setFitWidth(Global.FRAME_WIDTH/(W+2));
 			setFitHeight(Global.FRAME_HEIGHT/(H+2));
 			setOnMouseClicked((event) -> {
-				//TODO: Not working
-//				if(event.isPrimaryButtonDown()) {
-//					System.out.println("Here2");
-//					if(!firstClick) {
-//						DEBUG_showMines();
-//					}
-//				} else if(event.isSecondaryButtonDown()) {
-//					if(!firstClick) {
-//						DEBUG_flagMines();
-//					}
-//				}
 				if(!firstClick) {
 					DEBUG_showMines();
 				}
@@ -211,9 +205,11 @@ public class Minesweaper {
 				
 				tiles[i][j].setOnMousePressed((event) -> {
 					if (firstClick) {
+						Debugger.DEBUG_print("Click Event", "User made first click", true);
 						Object img = event.getSource();
 						if(img instanceof ImageView) {
 							int[] cords = (int[]) ((ImageView) img).getUserData();
+							Debugger.DEBUG_print("Click Event", "User clicked " + Debugger.DEBUG_getCordsString(cords[0], cords[1]), true);
 							generateMines(cords[0], cords[1]);
 							updateTile(cords[0], cords[1], Global.TILE_EMPTY, TileState.EMPTY);
 							checkSurroundingUnclicked(cords[0], cords[1]);
@@ -224,6 +220,7 @@ public class Minesweaper {
 						if(img instanceof ImageView) {
 							int[] cords = (int[]) ((ImageView) img).getUserData();
 							TileState s = state[cords[0]][cords[1]];
+							Debugger.DEBUG_print("Click Event", "User " + (event.isPrimaryButtonDown() ? "clicked " : "flaged ") + Debugger.DEBUG_getCordsString(cords[0], cords[1]) + " with state " + s.toString(), true);
 							if(event.isPrimaryButtonDown()) {
 								if(s.equals(TileState.UNCLICKED)) {
 									((ImageView) img).setImage(new Image(Global.TILE_EMPTY));
@@ -254,6 +251,7 @@ public class Minesweaper {
 									((ImageView) img).setImage(new Image(Global.TILE_EIGHT));
 									state[cords[0]][cords[1]] = TileState.EIGHT;
 								} else if(s.equals(TileState.MINE)) {
+									Debugger.DEBUG_print("Game Event", "User clicked a mine, game over", true);
 									((ImageView) img).setImage(new Image(Global.TILE_MINE));
 									stage.setTitle("You lost");
 									info.stopClock();
@@ -328,12 +326,14 @@ public class Minesweaper {
 											state[cords[0]][cords[1]] = TileState.FLAG;
 										}
 										flagsRemaining--;
+										Debugger.DEBUG_print("Variable Tracker", "Used flag, " + flagsRemaining + " flags left", true);
 										info.updateMines(((flagsRemaining / 1000) % 10), 
 												(flagsRemaining / 100) % 10, 
 												(flagsRemaining / 10) % 10, 
 												flagsRemaining % 10);
 										stage.setTitle("Flags remaining: " + flagsRemaining);
 										if(flagsRemaining == 0) {
+											Debugger.DEBUG_print("Game Event", "All flags used, checking for win", true);
 											int correctCount = 0;
 											for(int x = 0; x < tiles.length; x++) {
 												for(int y = 0; y < tiles[0].length; y++) {
@@ -343,6 +343,7 @@ public class Minesweaper {
 												}
 											}
 											if(correctCount == mineCount) {
+												Debugger.DEBUG_print("Game Event", "All flags are correct, game won", true);
 												gameOver = true;
 												stage.setTitle("You win!");
 												info.stopClock();
@@ -354,6 +355,7 @@ public class Minesweaper {
 															
 												Optional<String> usernameResult = usernameDialog.showAndWait();
 												usernameResult.ifPresent(name -> {
+													Debugger.DEBUG_print("Game Event", "Saving score of " + time + " under alias " + name, true);
 													dataManager.write(name, diff.toString(), Integer.toString(time));
 												});
 												 
@@ -384,6 +386,7 @@ public class Minesweaper {
 										state[cords[0]][cords[1]] = TileState.UNCLICKED;
 									}
 									flagsRemaining++;
+									Debugger.DEBUG_print("Variable Tracker", "Gained flag, " + flagsRemaining + " flags left", true);
 									info.updateMines(((flagsRemaining / 1000) % 10), 
 											(flagsRemaining/ 100) % 10, 
 											(flagsRemaining / 10) % 10, 
@@ -403,7 +406,7 @@ public class Minesweaper {
 		for(int i = -1; i <= 1; i++) {
 			for(int j = -1; j <= 1; j++) {
 				if(i >= 0 && i < W && j >= 0 && j < H) {
-					printCords(i,j);
+					Debugger.DEBUG_printCords(i,j);
 					nullRegion.add(new int[] {i, j});
 				}
 			}
@@ -423,6 +426,7 @@ public class Minesweaper {
 				if(!state[i][j].equals(TileState.MINE) && !nullRegion.contains(new int[] {i, j})) {
 					state[i][j] = TileState.MINE;
 					placedMines++;
+					Debugger.DEBUG_print("Mine Generation", "Placed mine at " + Debugger.DEBUG_getCordsString(i, j) + " for a total of " + placedMines, true);
 				}
 			}
 			i++;
@@ -441,6 +445,7 @@ public class Minesweaper {
 							}
 						}
 					}
+					Debugger.DEBUG_print("Mine Generation", "At tile " + Debugger.DEBUG_getCordsString(i, j) + ", there are " + mCount + " surrounding mines", true);
 					if(mCount == 1) {
 						state[i][j] = TileState.ONEUNCLICKED;
 					} else if(mCount == 2) {
@@ -469,6 +474,8 @@ public class Minesweaper {
 				if(x+i >= 0 && x+i < tiles.length && y+j >= 0 && y+j < tiles[0].length) {
 					if(state[x+i][y+j].equals(TileState.UNCLICKED) && (Math.abs(i) != Math.abs(j))) {
 						updateTile(x+i, y+j, Global.TILE_EMPTY, TileState.EMPTY);
+						Debugger.DEBUG_print("Uncover Empty", "Found empty tile surrounding " + Debugger.DEBUG_getCordsString(x, y) + " at " +
+						Debugger.DEBUG_getCordsString(i, j), true);
 						checkSurroundingUnclicked(x+i,y+j);
 					} else if(state[x+i][y+j].equals(TileState.ONEUNCLICKED) && (Math.abs(i) != Math.abs(j))) {
 						updateTile(x+i, y+j, Global.TILE_ONE, TileState.ONE);
@@ -492,8 +499,15 @@ public class Minesweaper {
 		}
 	}
 	
+	public void updateTile(int x, int y, String img, TileState state) {
+		Debugger.DEBUG_print("Update Tile Event", "Updating tile at " + Debugger.DEBUG_getCordsString(x, y) + " to " + state.toString(), true);
+		this.state[x][y] = state;
+		tiles[x][y].setImage(new Image(img));
+	}
+	
 	public void DEBUG_showMines() {
-		if(DEBUG_MODE) {
+		Debugger.DEBUG_print("Cheat Event", "Show mines activated", true);
+		if(Global.DEBUG_MODE) {
 			for(int i = 0; i < tiles.length; i++) {
 				for(int j = 0; j < tiles[0].length; j++) {
 					if(!state[i][j].equals(TileState.MINE) && !state[i][j].equals(TileState.MINEFLAG)) {
@@ -505,7 +519,8 @@ public class Minesweaper {
 	}
 	
 	public void DEBUG_flagMines() {
-		if(DEBUG_MODE) {
+		Debugger.DEBUG_print("Cheat Event", "Flag mines activated", true);
+		if(Global.DEBUG_MODE) {
 			for(int i = 0; i < tiles.length; i++) {
 				for(int j = 0; j < tiles[0].length; j++) {
 					if(state[i][j].equals(TileState.MINE)) {
@@ -522,19 +537,9 @@ public class Minesweaper {
 	}
 	
 	public void DEBUG_printHighscore() {
-		if(DEBUG_MODE) {
+		if(Global.DEBUG_MODE) {
 			dataManager.readToObservableList();
 			dataManager.DEBUG_printMap();
 		}
 	}
-	
-	public void printCords(int x, int y) {
-		System.out.println("(" + x + "," + y + ")");
-	}
-	
-	public void updateTile(int x, int y, String img, TileState state) {
-		this.state[x][y] = state;
-		tiles[x][y].setImage(new Image(img));
-	}
-
 }

@@ -1,5 +1,7 @@
 package game.helper;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 public class Global {
@@ -8,14 +10,22 @@ public class Global {
 	public static int TILE_WIDTH;
 	public static int TILE_HEIGHT;
 	
+	public final static boolean DEBUG_MODE = true;
+	
+	public static String bootTime;
+	public static DateTimeFormatter fileFormat = DateTimeFormatter.ofPattern("MM_dd_yyyy-HH_mm_ss");
+	public static DateTimeFormatter logFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+	
 	public final static String USER_NAME = System.getProperty("user.name");
 	public final static String GAME_PATH = "C:\\Users\\"+ USER_NAME +"\\Documents\\my games\\Minesweaper-QP\\";
 	public final static String GAME_DATA_PATH = GAME_PATH + "\\data\\";
+	public final static String GAME_LOG_PATH = GAME_PATH + "\\logs\\";
 	
 	
 	public final static String DATA_PATH = GAME_DATA_PATH + "data.txt";
 	public final static String IV_PATH = GAME_DATA_PATH + "iv.txt";
 	public final static String KEY_PATH = GAME_DATA_PATH + "key.txt";
+	public static String LOG_PATH = GAME_LOG_PATH;
 	
 	public final static String TILE_ONE = "res/tile_one.jpg";
 	public final static String TILE_TWO = "res/tile_two.jpg";
@@ -71,6 +81,10 @@ public class Global {
 		number.put(7, NUMBER_SEVEN);
 		number.put(8, NUMBER_EIGHT);
 		number.put(9, NUMBER_NINE);
+	}
+	
+	public static LocalDateTime getNow() {
+		return LocalDateTime.now();
 	}
 	
 	//public final static int MAX_WIDTH = 320, MIN_WIDTH = 400; //1000 500
