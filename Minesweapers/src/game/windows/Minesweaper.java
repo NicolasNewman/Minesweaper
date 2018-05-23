@@ -10,6 +10,8 @@ import game.helper.Global;
 import game.save_data.DataManager;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,9 +37,11 @@ public class Minesweaper {
 	private int W = 10;
 	private int mineCount = 10;
 	private int flagsRemaining = 10;
+	private int nullRegionSize = 1;
 	private double tempMineCount;
 	private boolean gameOver = false;
 	private boolean firstClick = true;
+	private boolean hasCheated = false;
 	private final Difficulty diff;
 	
 	public Minesweaper(int W, int H, int tempMineCount, Difficulty diff) {
@@ -348,16 +352,24 @@ public class Minesweaper {
 												stage.setTitle("You win!");
 												info.stopClock();
 												int time = info.getTimeInSeconds();
-												TextInputDialog usernameDialog = new TextInputDialog("name");
-												usernameDialog.setTitle("Leaderboard");
-												usernameDialog.setHeaderText("Please enter your name");
-												usernameDialog.setContentText("Name:");
-															
-												Optional<String> usernameResult = usernameDialog.showAndWait();
-												usernameResult.ifPresent(name -> {
-													Debugger.DEBUG_print("Game Event", "Saving score of " + time + " under alias " + name, true);
-													dataManager.write(name, diff.toString(), Integer.toString(time));
-												});
+												Debugger.DEBUG_print("Game Event", "hasCheated is " + hasCheated + (hasCheated ? ". High score can't be recorded" : ". High score can be recorded"), true);
+												if(!hasCheated) {
+													TextInputDialog usernameDialog = new TextInputDialog("name");
+													usernameDialog.setTitle("Leaderboard");
+													usernameDialog.setHeaderText("Please enter your name");
+													usernameDialog.setContentText("Name:");
+																
+													Optional<String> usernameResult = usernameDialog.showAndWait();
+													usernameResult.ifPresent(name -> {
+														Debugger.DEBUG_print("Game Event", "Saving score of " + time + " under alias " + name, true);
+														dataManager.write(name, diff.toString(), Integer.toString(time));
+													});
+												} else {
+													Alert alert = new Alert(AlertType.WARNING);
+													alert.setTitle("Warning");
+													alert.setHeaderText("Since cheats were used, a high score can't be recorded");
+													alert.showAndWait();
+												}
 												 
 											}
 										}
@@ -403,11 +415,11 @@ public class Minesweaper {
 	
 	private void generateMines(int x, int y) {
 		ArrayList<int[]> nullRegion = new ArrayList<>();
-		for(int i = -1; i <= 1; i++) {
-			for(int j = -1; j <= 1; j++) {
-				if(i >= 0 && i < W && j >= 0 && j < H) {
-					Debugger.DEBUG_printCords(i,j);
-					nullRegion.add(new int[] {i, j});
+		for(int i = -(nullRegionSize); i <= nullRegionSize; i++) {
+			for(int j = -(nullRegionSize); j <= nullRegionSize; j++) {
+				if(i+x >= 0 && i+x < W && j+y >= 0 && j+y < H) {
+					nullRegion.add(new int[] {x+i, y+j});
+					Debugger.DEBUG_print("Mine Generation", "Added " + Debugger.DEBUG_getCordsString(x+i, y+j) + " to the null region", true);
 				}
 			}
 		}
@@ -423,7 +435,7 @@ public class Minesweaper {
 				j = 0;
 			}
 			if(Math.random() < 0.05) {
-				if(!state[i][j].equals(TileState.MINE) && !nullRegion.contains(new int[] {i, j})) {
+				if(!state[i][j].equals(TileState.MINE) && !Global.containsCord(nullRegion, new int[] {i, j})) {
 					state[i][j] = TileState.MINE;
 					placedMines++;
 					Debugger.DEBUG_print("Mine Generation", "Placed mine at " + Debugger.DEBUG_getCordsString(i, j) + " for a total of " + placedMines, true);
@@ -506,12 +518,29 @@ public class Minesweaper {
 	}
 	
 	public void DEBUG_showMines() {
+		hasCheated = true;
 		Debugger.DEBUG_print("Cheat Event", "Show mines activated", true);
 		if(Global.DEBUG_MODE) {
 			for(int i = 0; i < tiles.length; i++) {
 				for(int j = 0; j < tiles[0].length; j++) {
-					if(!state[i][j].equals(TileState.MINE) && !state[i][j].equals(TileState.MINEFLAG)) {
+					if(state[i][j].equals(TileState.UNCLICKED)) {
 						updateTile(i, j, Global.TILE_EMPTY, TileState.EMPTY);
+					} else if(state[i][j].equals(TileState.ONEUNCLICKED)) {
+						updateTile(i, j, Global.TILE_ONE, TileState.ONE);
+					} else if(state[i][j].equals(TileState.TWOUNCLICKED)) {
+						updateTile(i, j, Global.TILE_TWO, TileState.TWO);
+					} else if(state[i][j].equals(TileState.THREEUNCLICKED)) {
+						updateTile(i, j, Global.TILE_THREE, TileState.THREE);
+					} else if(state[i][j].equals(TileState.FOURUNCLICKED)) {
+						updateTile(i, j, Global.TILE_FOUR, TileState.FOUR);
+					} else if(state[i][j].equals(TileState.FIVEUNCLICKED)) {
+						updateTile(i, j, Global.TILE_FIVE, TileState.FIVE);
+					} else if(state[i][j].equals(TileState.SIXUNCLICKED)) {
+						updateTile(i, j, Global.TILE_SIX, TileState.SIX);
+					} else if(state[i][j].equals(TileState.SEVENUNCLICKED)) {
+						updateTile(i, j, Global.TILE_SEVEN, TileState.SEVEN);
+					} else if(state[i][j].equals(TileState.EIGHTUNCLICKED)) {
+						updateTile(i, j, Global.TILE_EIGHT, TileState.EIGHT);
 					}
 				}
 			}
@@ -519,6 +548,7 @@ public class Minesweaper {
 	}
 	
 	public void DEBUG_flagMines() {
+		hasCheated = true;
 		Debugger.DEBUG_print("Cheat Event", "Flag mines activated", true);
 		if(Global.DEBUG_MODE) {
 			for(int i = 0; i < tiles.length; i++) {

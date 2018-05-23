@@ -2,6 +2,7 @@ package game.helper;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Global {
@@ -85,5 +86,20 @@ public class Global {
 	
 	public static LocalDateTime getNow() {
 		return LocalDateTime.now();
+	}
+	
+	public static boolean containsCord(ArrayList<int[]> list, int[] cords) {
+		if(cords.length == 2) {
+			for(int[] cord : list) {
+				if(cord.length != 2) {
+					return false;
+				}
+				if(cord[0] == cords[0] && cord[1] == cords[1]) {
+					return true;
+				}
+				
+			}
+		}
+		return false;
 	}
 }
