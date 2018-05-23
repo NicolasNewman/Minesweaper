@@ -14,12 +14,14 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
+		primaryStage.getIcons().add(new Image("file:resources/images/Minesweeper.png"));
 		Global.bootTime = Global.getNow().format(Global.fileFormat);
 		Global.LOG_PATH += Global.bootTime + ".log";
 		primaryStage.setOnCloseRequest(event -> {
@@ -42,7 +44,7 @@ public class Main extends Application {
 			Scene scene = new Scene(root);
 			
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Minesweaper");
+			primaryStage.setTitle("Minesweeper");
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

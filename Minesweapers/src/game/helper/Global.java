@@ -27,48 +27,48 @@ public class Global {
 	public final static String KEY_PATH = GAME_DATA_PATH + "key.txt";
 	public static String LOG_PATH = GAME_LOG_PATH;
 	
-	public final static String TILE_ONE = "res/tile_one.jpg";
-	public final static String TILE_TWO = "res/tile_two.jpg";
-	public final static String TILE_THREE = "res/tile_three.jpg";
-	public final static String TILE_FOUR = "res/tile_four.jpg";
-	public final static String TILE_FIVE = "res/tile_five.jpg";
-	public final static String TILE_SIX = "res/tile_six.jpg";
-	public final static String TILE_SEVEN = "res/tile_seven.jpg";
-	public final static String TILE_EIGHT = "res/tile_eight.jpg";
+	public final static String TILE_ONE = "file:resources/images/tile/tile_one.jpg";
+	public final static String TILE_TWO = "file:resources/images/tile/tile_two.jpg";
+	public final static String TILE_THREE = "file:resources/images/tile/tile_three.jpg";
+	public final static String TILE_FOUR = "file:resources/images/tile/tile_four.jpg";
+	public final static String TILE_FIVE = "file:resources/images/tile/tile_five.jpg";
+	public final static String TILE_SIX = "file:resources/images/tile/tile_six.jpg";
+	public final static String TILE_SEVEN = "file:resources/images/tile/tile_seven.jpg";
+	public final static String TILE_EIGHT = "file:resources/images/tile/tile_eight.jpg";
 	
-	public final static String TILE_MINE = "res/tile_mine.jpg";
-	public final static String TILE_FLAG = "res/tile_flag.jpg";
-	public final static String TILE_UNCLICKED = "res/tile_unclicked.jpg";
-	public final static String TILE_EMPTY = "res/tile_empty.jpg";
+	public final static String TILE_MINE = "file:resources/images/tile/tile_mine.jpg";
+	public final static String TILE_FLAG = "file:resources/images/tile/tile_flag.jpg";
+	public final static String TILE_UNCLICKED = "file:resources/images/tile/tile_unclicked.jpg";
+	public final static String TILE_EMPTY = "file:resources/images/tile/tile_empty.jpg";
 	
 	
-	public final static String BORDER_HUD = "res/border/border_hud.jpg";
+	public final static String BORDER_HUD = "file:resources/images/border/border_hud.jpg";
 	
-	public final static String BORDER_BOTTOM_SIDE = "res/border/border_bottom_side.jpg";
-	public final static String BORDER_TOP_SIDE = "res/border/border_top_side.jpg";
+	public final static String BORDER_BOTTOM_SIDE = "file:resources/images/border/border_bottom_side.jpg";
+	public final static String BORDER_TOP_SIDE = "file:resources/images/border/border_top_side.jpg";
 	
-	public final static String BORDER_LEFT_SIDE = "res/border/border_left_side.jpg";
-	public final static String BORDER_LEFT_T = "res/border/border_left_T.jpg";
+	public final static String BORDER_LEFT_SIDE = "file:resources/images/border/border_left_side.jpg";
+	public final static String BORDER_LEFT_T = "file:resources/images/border/border_left_T.jpg";
 	
-	public final static String BORDER_RIGHT_SIDE = "res/border/border_right_side.jpg";
-	public final static String BORDER_RIGHT_T = "res/border/border_right_T.jpg";
+	public final static String BORDER_RIGHT_SIDE = "file:resources/images/border/border_right_side.jpg";
+	public final static String BORDER_RIGHT_T = "file:resources/images/border/border_right_T.jpg";
 	
-	public final static String BORDER_CORNER_BL = "res/border/border_corner_BL.jpg";
-	public final static String BORDER_CORNER_BR = "res/border/border_corner_BR.jpg";
-	public final static String BORDER_CORNER_TL = "res/border/border_corner_TL.jpg";
-	public final static String BORDER_CORNER_TR = "res/border/border_corner_TR.jpg";
+	public final static String BORDER_CORNER_BL = "file:resources/images/border/border_corner_BL.jpg";
+	public final static String BORDER_CORNER_BR = "file:resources/images/border/border_corner_BR.jpg";
+	public final static String BORDER_CORNER_TL = "file:resources/images/border/border_corner_TL.jpg";
+	public final static String BORDER_CORNER_TR = "file:resources/images/border/border_corner_TR.jpg";
 	
 	public static HashMap<Integer, String> number = new HashMap<>();
-	public final static String NUMBER_ZERO = "res/number/number_0.jpg";
-	public final static String NUMBER_ONE = "res/number/number_1.jpg";
-	public final static String NUMBER_TWO = "res/number/number_2.jpg";
-	public final static String NUMBER_THREE = "res/number/number_3.jpg";
-	public final static String NUMBER_FOUR = "res/number/number_4.jpg";
-	public final static String NUMBER_FIVE = "res/number/number_5.jpg";
-	public final static String NUMBER_SIX = "res/number/number_6.jpg";
-	public final static String NUMBER_SEVEN = "res/number/number_7.jpg";
-	public final static String NUMBER_EIGHT = "res/number/number_8.jpg";
-	public final static String NUMBER_NINE = "res/number/number_9.jpg";
+	public final static String NUMBER_ZERO = "file:resources/images/number/number_0.jpg";
+	public final static String NUMBER_ONE = "file:resources/images/number/number_1.jpg";
+	public final static String NUMBER_TWO = "file:resources/images/number/number_2.jpg";
+	public final static String NUMBER_THREE = "file:resources/images/number/number_3.jpg";
+	public final static String NUMBER_FOUR = "file:resources/images/number/number_4.jpg";
+	public final static String NUMBER_FIVE = "file:resources/images/number/number_5.jpg";
+	public final static String NUMBER_SIX = "file:resources/images/number/number_6.jpg";
+	public final static String NUMBER_SEVEN = "file:resources/images/number/number_7.jpg";
+	public final static String NUMBER_EIGHT = "file:resources/images/number/number_8.jpg";
+	public final static String NUMBER_NINE = "file:resources/images/number/number_9.jpg";
 	
 	public static void loadNumbers() {
 		number.put(0, NUMBER_ZERO);
@@ -86,7 +86,4 @@ public class Global {
 	public static LocalDateTime getNow() {
 		return LocalDateTime.now();
 	}
-	
-	//public final static int MAX_WIDTH = 320, MIN_WIDTH = 400; //1000 500
-	//public final static int MAX_HEIGHT = 320, MIN_HEIGHT = 400;
 }
