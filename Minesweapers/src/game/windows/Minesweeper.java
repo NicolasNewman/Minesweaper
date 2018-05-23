@@ -22,7 +22,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Minesweaper {
+public class Minesweeper {
 	
 	private Parent root;
 	private Stage stage;
@@ -44,7 +44,7 @@ public class Minesweaper {
 	private boolean hasCheated = false;
 	private final Difficulty diff;
 	
-	public Minesweaper(int W, int H, int tempMineCount, Difficulty diff) {
+	public Minesweeper(int W, int H, int tempMineCount, Difficulty diff) {
 		this.W = W;
 		this.H = H;
 		this.tempMineCount = tempMineCount;
@@ -54,7 +54,7 @@ public class Minesweaper {
 	
 	private void createWindow() {
 		stage = new Stage();
-		stage.setTitle("Minesweaper");
+		stage.setTitle("Minesweeper");
 		
 //		TextInputDialog lengthDialog = new TextInputDialog("10");
 //		lengthDialog.setTitle("Length");

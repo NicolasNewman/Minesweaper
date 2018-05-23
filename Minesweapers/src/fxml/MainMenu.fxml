@@ -10,7 +10,7 @@
    <children>
       <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="4.0" prefHeight="204.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="21.0" prefWidth="95.0" text="Minesweaper">
+            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="21.0" prefWidth="95.0" text="Minesweeper">
                <font>
                   <Font size="22.0" />
                </font>

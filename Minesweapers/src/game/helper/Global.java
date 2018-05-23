@@ -18,7 +18,7 @@ public class Global {
 	public static DateTimeFormatter logFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 	
 	public final static String USER_NAME = System.getProperty("user.name");
-	public final static String GAME_PATH = "C:\\Users\\"+ USER_NAME +"\\Documents\\my games\\Minesweaper-QP\\";
+	public final static String GAME_PATH = "C:\\Users\\"+ USER_NAME +"\\Documents\\my games\\Minesweeper-QP\\";
 	public final static String GAME_DATA_PATH = GAME_PATH + "\\data\\";
 	public final static String GAME_LOG_PATH = GAME_PATH + "\\logs\\";
 	
