@@ -11,6 +11,7 @@ All resources were created by me however anyone can use them if needed for their
 * High scores are stored on a global leaderboard
 * Add comments
 * ~~Add a debugger that logs information to a file~~
+* Compatible with both Windows and macOS
 
 ### Bugs:
 * 10x10 sometimes only generates 9 mines instead of 10.
