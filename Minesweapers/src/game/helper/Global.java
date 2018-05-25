@@ -12,6 +12,8 @@ public class Global {
 	public static int TILE_WIDTH;
 	public static int TILE_HEIGHT;
 	
+	public static final String version = "1.1.2";
+	
 	public static boolean DEBUG_MODE = false;
 	public static boolean cheatsDisableScore = false;
 	public static final boolean SECURE_DATA = true;

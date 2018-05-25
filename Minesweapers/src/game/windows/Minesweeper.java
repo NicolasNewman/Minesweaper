@@ -24,7 +24,6 @@ import javafx.stage.Stage;
 
 public class Minesweeper {
 	
-	private Parent root;
 	private Stage stage;
 	private VBox vbox = new VBox();
 	private GridPane grid = new GridPane();
