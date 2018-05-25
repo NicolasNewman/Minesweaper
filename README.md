@@ -9,6 +9,7 @@ All resources except the icon were created by me however anyone can use them if 
 * ~~Clock can go past 999~~
 * ~~Keep track of high scores~~
 * High scores are stored on a global leaderboard
+* Detect out of date version
 * ~~Add comments~~
 * ~~Add a debugger that logs information to a file~~
 * Compatible with both Windows and macOS
