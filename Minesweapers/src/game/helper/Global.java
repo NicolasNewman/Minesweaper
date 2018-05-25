@@ -7,15 +7,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Global {
+
 	public static int FRAME_WIDTH;
 	public static int FRAME_HEIGHT;
 	public static int TILE_WIDTH;
 	public static int TILE_HEIGHT;
 	
-	public static final String version = "1.1.2";
+	public static final String VERSION = "1.1.2";
 	
 	public static boolean DEBUG_MODE = false;
-	public static boolean cheatsDisableScore = false;
+	public static final boolean CHEATS_DISABLE_SCORE = false;
 	public static final boolean SECURE_DATA = true;
 	
 	public static String bootTime;

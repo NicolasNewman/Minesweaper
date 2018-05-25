@@ -543,7 +543,7 @@ public class Minesweeper {
 	 * Reveals the location of the mines
 	 */
 	public void DEBUG_showMines() {
-		if(Global.cheatsDisableScore) {
+		if(Global.CHEATS_DISABLE_SCORE) {
 			hasCheated = true;
 		}
 		Debugger.DEBUG_print("Cheat Event", "Show mines activated", true);
@@ -578,7 +578,7 @@ public class Minesweeper {
 	 * Flags each mine
 	 */
 	public void DEBUG_flagMines() {
-		if(Global.cheatsDisableScore) {
+		if(Global.CHEATS_DISABLE_SCORE) {
 			hasCheated = true;
 		}
 		Debugger.DEBUG_print("Cheat Event", "Flag mines activated", true);

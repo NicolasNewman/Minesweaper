@@ -110,7 +110,7 @@ public class Main extends Application {
 		try {
 			Repository repo = service.getRepository("NicolasNewman", "Minesweeper");
 			String version = repo.getDescription();
-			boolean versionMatch = version.equals(Global.version) ? true : false;
+			boolean versionMatch = version.equals(Global.VERSION) ? true : false;
 			if(!versionMatch) {
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Warning");
