@@ -1,6 +1,7 @@
 package application;
 
 import game.enums.Difficulty;
+import game.windows.Info;
 import game.windows.Leaderboard;
 import game.windows.Minesweeper;
 import javafx.fxml.FXML;
@@ -24,6 +25,10 @@ public class Controller {
 	
 	public void leaderboardClicked() {
 		Leaderboard board = new Leaderboard();
+	}
+	
+	public void infoClicked() {
+		Info info = new Info();
 	}
 
 }

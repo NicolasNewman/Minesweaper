@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
+		
 		primaryStage.getIcons().add(new Image("file:resources/images/Minesweeper.png"));
 		Global.bootTime = Global.getNow().format(Global.fileFormat);
 		Global.LOG_PATH += Global.bootTime + ".log";
@@ -56,6 +57,10 @@ public class Main extends Application {
 		launch(args);
 	}
 	
+	/**
+	 * Checks to make sure each needed directory exists. If not, create it
+	 * Also creates the log file if debug mode is enabled
+	 */
 	public static void verifyDataExists() {
 		File gameDir = new File(Global.GAME_PATH);
 		File dataDir = new File(Global.GAME_DATA_PATH);

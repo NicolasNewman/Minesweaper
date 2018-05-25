@@ -7,7 +7,7 @@ import game.enums.Difficulty;
 import game.enums.TileState;
 import game.helper.Debugger;
 import game.helper.Global;
-import game.save_data.DataManager;
+import game.save_data.SecureDataManager;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -31,7 +31,7 @@ public class Minesweeper {
 	private GameInfo info;
 	private ImageView[][] tiles;
 	private TileState[][] state;
-	private DataManager dataManager = new DataManager(Global.DATA_PATH);
+	private SecureDataManager dataManager = new SecureDataManager(Global.DATA_PATH);
 	
 	private int H = 10;
 	private int W = 10;
@@ -134,14 +134,14 @@ public class Minesweeper {
 		Scene scene = new Scene(vbox, Global.FRAME_WIDTH, Global.FRAME_HEIGHT+(Global.TILE_HEIGHT*3));
 		
 		generateField();
-		//generateMines();
-		
-		//grid.add(info, 0, 0);
 
 		stage.setScene(scene);
 		stage.show();
 	}
 	
+	/**
+	 * Generates the field and sets the listener for each tile
+	 */
 	private void generateField() {
 		for(int i = 0; i < W+2; i++) {
 			if (i > 0 && i < W+1) {
@@ -225,6 +225,7 @@ public class Minesweeper {
 							int[] cords = (int[]) ((ImageView) img).getUserData();
 							TileState s = state[cords[0]][cords[1]];
 							Debugger.DEBUG_print("Click Event", "User " + (event.isPrimaryButtonDown() ? "clicked " : "flaged ") + Debugger.DEBUG_getCordsString(cords[0], cords[1]) + " with state " + s.toString(), true);
+							// On left click, reveal tile
 							if(event.isPrimaryButtonDown()) {
 								if(s.equals(TileState.UNCLICKED)) {
 									((ImageView) img).setImage(new Image(Global.TILE_EMPTY));
@@ -257,7 +258,6 @@ public class Minesweeper {
 								} else if(s.equals(TileState.MINE)) {
 									Debugger.DEBUG_print("Game Event", "User clicked a mine, game over", true);
 									((ImageView) img).setImage(new Image(Global.TILE_MINE));
-									stage.setTitle("You lost");
 									info.stopClock();
 									gameOver = true;
 									for(int x = 0; x < tiles.length; x++) {
@@ -304,7 +304,9 @@ public class Minesweeper {
 										}
 									}
 								}
+							// On right click, place flag and check for win
 							} else if(event.isSecondaryButtonDown()) {
+								// If tile is not flagged
 								if(s.equals(TileState.UNCLICKED) || TileState.isNumberUnclicked(s) || s.equals(TileState.MINE)) {
 									if(flagsRemaining > 0) {
 										((ImageView) img).setImage(new Image(Global.TILE_FLAG));
@@ -335,7 +337,7 @@ public class Minesweeper {
 												(flagsRemaining / 100) % 10, 
 												(flagsRemaining / 10) % 10, 
 												flagsRemaining % 10);
-										stage.setTitle("Flags remaining: " + flagsRemaining);
+										// Checks if the player has won
 										if(flagsRemaining == 0) {
 											Debugger.DEBUG_print("Game Event", "All flags used, checking for win", true);
 											int correctCount = 0;
@@ -349,7 +351,6 @@ public class Minesweeper {
 											if(correctCount == mineCount) {
 												Debugger.DEBUG_print("Game Event", "All flags are correct, game won", true);
 												gameOver = true;
-												stage.setTitle("You win!");
 												info.stopClock();
 												int time = info.getTimeInSeconds();
 												Debugger.DEBUG_print("Game Event", "hasCheated is " + hasCheated + (hasCheated ? ". High score can't be recorded" : ". High score can be recorded"), true);
@@ -374,6 +375,7 @@ public class Minesweeper {
 											}
 										}
 									}
+								// If tile is already flagged, remove the flag
 								} else if(s.equals(TileState.FLAG) || TileState.isNumberFlag(s) || s.equals(TileState.MINEFLAG)) {
 									((ImageView) img).setImage(new Image(Global.TILE_UNCLICKED));
 									if(s.equals(TileState.ONEFLAG)) {
@@ -403,7 +405,7 @@ public class Minesweeper {
 											(flagsRemaining/ 100) % 10, 
 											(flagsRemaining / 10) % 10, 
 											flagsRemaining % 10);
-									stage.setTitle("Flags remaining: " + flagsRemaining);
+									//stage.setTitle("Flags remaining: " + flagsRemaining);
 								}
 							}
 						}
@@ -413,7 +415,14 @@ public class Minesweeper {
 		}
 	}
 	
+	/**
+	 * After the user makes their first click, generates the mines
+	 * This is done after the first click to make sure it won't be a mine
+	 * @param x position of the first click
+	 * @param y position of the first click
+	 */
 	private void generateMines(int x, int y) {
+		// Region around the first click where no mines can be placed
 		ArrayList<int[]> nullRegion = new ArrayList<>();
 		for(int i = -(nullRegionSize); i <= nullRegionSize; i++) {
 			for(int j = -(nullRegionSize); j <= nullRegionSize; j++) {
@@ -426,6 +435,7 @@ public class Minesweeper {
 		int i = 0;
 		int j = 0;
 		int placedMines = 0;
+		// Generates the location of the mines
 		while(placedMines < mineCount) {
 			if(i > tiles.length-1) {
 				i = 0;
@@ -444,6 +454,7 @@ public class Minesweeper {
 			i++;
 		}
 
+		// Places the numbers around the mines
 		for(i = 0; i < tiles.length; i++) {
 			for(j = 0; j < tiles[0].length; j++) {
 				int mCount = 0;
@@ -480,6 +491,11 @@ public class Minesweeper {
 		}
 	}
 	
+	/**
+	 * Checks if the surrounding tiles are empty. If so, uncover them
+	 * @param x position of the click
+	 * @param y position of the click
+	 */
 	public void checkSurroundingUnclicked(int x, int y) {
 		for(int i = -1; i <= 1; i++) {
 			for(int j = -1; j <= 1; j++) {
@@ -511,14 +527,26 @@ public class Minesweeper {
 		}
 	}
 	
+	/**
+	 * Updates a tile at (x,y) with img and state
+	 * @param x
+	 * @param y
+	 * @param img
+	 * @param state
+	 */
 	public void updateTile(int x, int y, String img, TileState state) {
 		Debugger.DEBUG_print("Update Tile Event", "Updating tile at " + Debugger.DEBUG_getCordsString(x, y) + " to " + state.toString(), true);
 		this.state[x][y] = state;
 		tiles[x][y].setImage(new Image(img));
 	}
 	
+	/**
+	 * Reveals the location of the mines
+	 */
 	public void DEBUG_showMines() {
-		hasCheated = true;
+		if(Global.cheatsDisableScore) {
+			hasCheated = true;
+		}
 		Debugger.DEBUG_print("Cheat Event", "Show mines activated", true);
 		if(Global.DEBUG_MODE) {
 			for(int i = 0; i < tiles.length; i++) {
@@ -547,8 +575,13 @@ public class Minesweeper {
 		}
 	}
 	
+	/**
+	 * Flags each mine
+	 */
 	public void DEBUG_flagMines() {
-		hasCheated = true;
+		if(Global.cheatsDisableScore) {
+			hasCheated = true;
+		}
 		Debugger.DEBUG_print("Cheat Event", "Flag mines activated", true);
 		if(Global.DEBUG_MODE) {
 			for(int i = 0; i < tiles.length; i++) {

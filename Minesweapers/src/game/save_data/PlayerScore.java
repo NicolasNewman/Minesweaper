@@ -9,6 +9,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Contains the structure for each leaderboard entry
+ * Used for the table in game.windows.Leaderboard
+ * @author QuantumPie
+ *
+ */
 public class PlayerScore {
 	
 	private final StringProperty name;

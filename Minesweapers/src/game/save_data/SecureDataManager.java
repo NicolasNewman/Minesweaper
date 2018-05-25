@@ -1,10 +1,7 @@
 package game.save_data;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -16,14 +13,17 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 import game.enums.Difficulty;
+import game.helper.Debugger;
 import game.helper.Global;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 
-public class DataManager {
+/**
+ * Manages the read/write events of the data file
+ * @author QuantumPie
+ *
+ */
+public class SecureDataManager {
 	
 	private String path;
 	private DataEncrypter enc;
@@ -31,7 +31,12 @@ public class DataManager {
 	private HashMap<String, PlayerScore> nameMap = new HashMap<>();
 	private int key = 5;
 	
-	public DataManager(String path) {
+	/**
+	 * Initalize the DataEncrypter and path of the data file
+	 * @param path of the data file
+	 */
+	public SecureDataManager(String path) {
+		Debugger.DEBUG_print("Instance Created", "Instance of SecureDataManager created", true);
 		try {
 			enc = new DataEncrypter(Global.IV_PATH, Global.KEY_PATH);
 		} catch (InvalidKeyException | InvalidAlgorithmParameterException | NoSuchAlgorithmException
@@ -41,6 +46,12 @@ public class DataManager {
 		this.path = path;
 	}
 	
+	/**
+	 * Writes a score entry to the data file
+	 * @param name of the user
+	 * @param diff difficulty the score was set on
+	 * @param score time the user took to win
+	 */
 	public void write(String name, String diff, String score) {
 		try {
 			enc.encryptString((name + ":" + diff + ":" + score + "\n"), path, true);
@@ -50,6 +61,10 @@ public class DataManager {
 		}
 	}
 	
+	/**
+	 * Wipes the data in the event it is no longer readable 
+	 * (asks for confirmation in game.windows.Leaderboard)
+	 */
 	public void wipe() {
 		try(PrintWriter writer = new PrintWriter(path)) {
 			writer.print("");
@@ -58,6 +73,10 @@ public class DataManager {
 		}
 	}
 	
+	/**
+	 * Creates the ObservableList that is needed for the table in game.windows.Leaderboard
+	 * @return
+	 */
 	public ObservableList<PlayerScore> readToObservableList() {
 		scores = FXCollections.observableArrayList();
 		Stream<String> stream = null;
@@ -71,34 +90,35 @@ public class DataManager {
 			String[] lines = x.split("\n");
 			if(!lines[0].equals("")) {
 				for(String l : lines) {
-					// 0=name 1=diff 2=score
-					String[] section = l.split(":");
-					String name = section[0];
-					String diff = section[1];
-					String score = section[2];
-	
-					PlayerScore p = new PlayerScore(name);
-					if(!nameMap.containsKey(name)) {
-						nameMap.put(name, p);
-					}
-					
-					if(Difficulty.valueOf(diff).equals(Difficulty.EASY)) {
-						if(nameMap.get(name).getEasyScore() == -1) {
-							nameMap.get(name).setEasyScore(Integer.parseInt(score));
-						} else if(nameMap.get(name).getEasyScore() > Integer.parseInt(score)) {
-							nameMap.get(name).setEasyScore(Integer.parseInt(score));
+					if(l.contains("EASY") || l.contains("MEDIUM") || l.contains("HARD")) {
+						String[] section = l.split(":");
+						String name = section[0];
+						String diff = section[1];
+						String score = section[2];
+		
+						PlayerScore p = new PlayerScore(name);
+						if(!nameMap.containsKey(name)) {
+							nameMap.put(name, p);
 						}
-					} else if(Difficulty.valueOf(diff).equals(Difficulty.MEDIUM)) {
-						if(nameMap.get(name).getMediumScore() == -1) {
-							nameMap.get(name).setMediumScore(Integer.parseInt(score));
-						} else if(nameMap.get(name).getMediumScore() > Integer.parseInt(score)) {
-							nameMap.get(name).setMediumScore(Integer.parseInt(score));
-						}
-					} else if(Difficulty.valueOf(diff).equals(Difficulty.HARD)) {
-						if(nameMap.get(name).getHardScore() == -1) {
-							nameMap.get(name).setHardScore(Integer.parseInt(score));
-						} else if(nameMap.get(name).getHardScore() > Integer.parseInt(score)) {
-							nameMap.get(name).setHardScore(Integer.parseInt(score));
+						
+						if(Difficulty.valueOf(diff).equals(Difficulty.EASY)) {
+							if(nameMap.get(name).getEasyScore() == -1) {
+								nameMap.get(name).setEasyScore(Integer.parseInt(score));
+							} else if(nameMap.get(name).getEasyScore() > Integer.parseInt(score)) {
+								nameMap.get(name).setEasyScore(Integer.parseInt(score));
+							}
+						} else if(Difficulty.valueOf(diff).equals(Difficulty.MEDIUM)) {
+							if(nameMap.get(name).getMediumScore() == -1) {
+								nameMap.get(name).setMediumScore(Integer.parseInt(score));
+							} else if(nameMap.get(name).getMediumScore() > Integer.parseInt(score)) {
+								nameMap.get(name).setMediumScore(Integer.parseInt(score));
+							}
+						} else if(Difficulty.valueOf(diff).equals(Difficulty.HARD)) {
+							if(nameMap.get(name).getHardScore() == -1) {
+								nameMap.get(name).setHardScore(Integer.parseInt(score));
+							} else if(nameMap.get(name).getHardScore() > Integer.parseInt(score)) {
+								nameMap.get(name).setHardScore(Integer.parseInt(score));
+							}
 						}
 					}
 				}

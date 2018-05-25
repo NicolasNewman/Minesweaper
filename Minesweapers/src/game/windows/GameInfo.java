@@ -8,9 +8,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
+/**
+ * Element that contains the HUD information (flags remaining and clock)
+ * @author QuantumPie
+ *
+ */
 public class GameInfo extends VBox {
 
 	private boolean clockStarted = false;
@@ -33,7 +37,14 @@ public class GameInfo extends VBox {
 	public GridPane getGrid() {
 		return grid;
 	}
-
+	
+	/**
+	 * Updates the HUD with the number of flags remaining
+	 * @param th thousands place of flags remaining
+	 * @param h hundreds place of the flags remaining
+	 * @param t tens place of the flags remaining
+	 * @param o ones place of the flags remaining
+	 */
 	public void updateMines(int th, int h, int t, int o) {
 		String thS = Global.number.get(th);
 		String hS = Global.number.get(h);
@@ -58,6 +69,13 @@ public class GameInfo extends VBox {
 		}}, W, 1, 1, 2);
 	}
 	
+	/**
+	 * Updates the HUD with the time the game has been running for
+	 * @param th thousands place of the time
+	 * @param h hundreds place of the time
+	 * @param t tens place of the time
+	 * @param o ones palce of the time
+	 */
 	public void updateTime(int th, int h, int t, int o) {
 		String thS = Global.number.get(th);
 		String hS = Global.number.get(h);
@@ -82,6 +100,9 @@ public class GameInfo extends VBox {
 		}}, 4, 1, 1, 2);
 	}
 	
+	/**
+	 * Starts counting the time the game has been running for and updates the HUD
+	 */
 	public void startClock() {
 		if(!clockStarted) {
 			clockStarted = true;
@@ -134,6 +155,9 @@ public class GameInfo extends VBox {
 		clockStarted = false;
 	}
 	
+	/**
+	 * Generates the tiles in the grid for the HUD
+	 */
 	private void generateGrid() {
 		for(int i = 0; i < W; i++) {
 			ColumnConstraints column = new ColumnConstraints();

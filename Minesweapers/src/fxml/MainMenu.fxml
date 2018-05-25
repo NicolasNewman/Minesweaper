@@ -8,17 +8,18 @@
 
 <AnchorPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="4.0" prefHeight="204.0" prefWidth="200.0" spacing="10.0">
+      <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="4.0" prefHeight="244.0" prefWidth="200.0" spacing="10.0">
          <children>
             <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="21.0" prefWidth="95.0" text="Minesweeper">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <Button fx:id="easy" mnemonicParsing="false" onAction="#easyClicked" text="   Easy   " />
-            <Button fx:id="medium" mnemonicParsing="false" onAction="#mediumClicked" text="Medium" />
+            <Button fx:id="easy" mnemonicParsing="false" onAction="#easyClicked" prefWidth="77.0" text="   Easy   " />
+            <Button fx:id="medium" mnemonicParsing="false" onAction="#mediumClicked" prefWidth="77.0" text="Medium" />
             <Button fx:id="hard" mnemonicParsing="false" onAction="#hardClicked" text="   Hard   " />
             <Button fx:id="leaderboard" mnemonicParsing="false" onAction="#leaderboardClicked" text="Leaderboard" />
+            <Button mnemonicParsing="false" onAction="#infoClicked" prefWidth="77.0" text="Settings" />
          </children>
       </VBox>
    </children>

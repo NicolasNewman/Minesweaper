@@ -1,12 +1,11 @@
 package game.windows;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import game.enums.Difficulty;
 import game.helper.Global;
-import game.save_data.DataManager;
+import game.save_data.SecureDataManager;
 import game.save_data.PlayerScore;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -28,7 +27,7 @@ public class Leaderboard {
 	private Stage stage;
 	private TabPane tabPane = new TabPane();
 	private TableView<PlayerScore>[] tables = new TableView[3];
-	private DataManager m;
+	private SecureDataManager m;
 	private VBox vbox = new VBox();
 	
 	public Leaderboard() {
@@ -44,8 +43,9 @@ public class Leaderboard {
 		Tab[] tabs = new Tab[] {easyTab, mediumTab, hardTab};
 		Difficulty[] diffOrder = {Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD};
 		
-		m = new DataManager(Global.DATA_PATH);
+		m = new SecureDataManager(Global.DATA_PATH);
 		
+		// Loops through the three different tabs for each difficulty and creates and fills each table
 		try {
 			for(int i = 0; i < tables.length; i++) {
 				final int indx = i;
@@ -105,6 +105,9 @@ public class Leaderboard {
 		}
 	}
 	
+	/**
+	 * If the data isn't readable, ask the user if they would like to wipe it
+	 */
 	public void dataCurrupted() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setContentText("The score data is courrupted. Would you like to reset it? (the leaderboards will not function until this issue is resolved)");
