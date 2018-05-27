@@ -353,7 +353,7 @@ public class Minesweeper {
 												info.stopClock();
 												int time = info.getTimeInSeconds();
 												Debugger.DEBUG_print("Game Event", "hasCheated is " + hasCheated + (hasCheated ? ". High score can't be recorded" : ". High score can be recorded"), true);
-												if(!hasCheated) {
+												if(!hasCheated && diff != Difficulty.CUSTOM) {
 													TextInputDialog usernameDialog = new TextInputDialog("name");
 													usernameDialog.setTitle("Leaderboard");
 													usernameDialog.setHeaderText("Please enter your name");
@@ -364,6 +364,11 @@ public class Minesweeper {
 														Debugger.DEBUG_print("Game Event", "Saving score of " + time + " under alias " + name, true);
 														dataManager.write(name, diff.toString(), Integer.toString(time));
 													});
+												} else if(diff == Difficulty.CUSTOM) {
+													Alert alert = new Alert(AlertType.WARNING);
+													alert.setTitle("Warning");
+													alert.setHeaderText("Since this is a custom game, a high score cannot be recorded");
+													alert.showAndWait();
 												} else {
 													Alert alert = new Alert(AlertType.WARNING);
 													alert.setTitle("Warning");

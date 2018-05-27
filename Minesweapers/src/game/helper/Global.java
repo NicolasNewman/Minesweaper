@@ -6,6 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 public class Global {
 
 	public static int FRAME_WIDTH;
@@ -132,5 +135,14 @@ public class Global {
 			return System.getProperty("user.home") + File.separator + "Library" + File.separator + "Application Support" + File.separator + "Minesweeper_QP";
 		}
 		return null;
+	}
+	
+	public static void showError(String exception, String fix) {
+		Debugger.DEBUG_print("Error Event", "Received " + exception + " with " + fix + " as a possible fix", true);
+		Alert error = new Alert(AlertType.ERROR);
+		error.setTitle("Error");
+		error.setHeaderText(exception);
+		error.setContentText(fix);
+		error.showAndWait();
 	}
 }

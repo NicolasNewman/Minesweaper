@@ -50,7 +50,6 @@ public class Main extends Application {
 			if(new String(Files.readAllBytes(Paths.get(Global.KEY_PATH))).equals("")) {
 				DataEncrypter.generateKey(Global.KEY_PATH);
 			}
-			InputStream stream = Main.class.getResourceAsStream(Global.IV_PATH);
 			Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml"));
 			Scene scene = new Scene(root);
 			
