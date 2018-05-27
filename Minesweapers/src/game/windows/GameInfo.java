@@ -161,7 +161,7 @@ public class GameInfo extends VBox {
 	private void generateGrid() {
 		for(int i = 0; i < W; i++) {
 			ColumnConstraints column = new ColumnConstraints();
-			column.setPercentWidth(100/(W+2));
+			column.setPercentWidth(100.0/(W+2));
 			grid.getColumnConstraints().add(column);
 		}
 		

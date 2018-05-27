@@ -93,7 +93,7 @@ public class Minesweeper {
 		
 		if(W == H) {
 			for(int i = 32; i > 0; i--) {
-				if(i*W <= 800) {
+				if(i*(W+2) <= 800) {
 					Global.FRAME_WIDTH = i*(W+2);
 					Global.FRAME_HEIGHT = i*(H+2);
 					Global.TILE_HEIGHT = i;
@@ -109,13 +109,17 @@ public class Minesweeper {
 		Debugger.DEBUG_print("Create Field", "FRAME_HEIGHT set to " + Global.FRAME_HEIGHT, true);
 		Debugger.DEBUG_print("Create Field", "TILE_HEIGHT set to " + Global.TILE_HEIGHT, true);
 		for(int i = 0; i < W+2; i++) {
+			System.out.println(100/(W+2));
+			System.out.println((W+2)*100);
 			ColumnConstraints column = new ColumnConstraints();
-			column.setPercentWidth(100/(W+2));
+			column.setPercentWidth(100.0/(W+2));
 			grid.getColumnConstraints().add(column);
 		}
+		System.out.println(Global.TILE_HEIGHT);
+		System.out.println(Global.FRAME_HEIGHT);
 		for(int i = 0; i < H+2; i++) {
 			RowConstraints row = new RowConstraints();
-			row.setPercentHeight(100/(H+2));
+			row.setPercentHeight(100.0/(H+2));
 			grid.getRowConstraints().add(row);
 		}
 		grid.setPrefSize(Global.FRAME_WIDTH, Global.FRAME_HEIGHT);
