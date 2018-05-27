@@ -5,7 +5,7 @@ All resources except the icon were created by me however anyone can use them if 
 
 ### TODO:
 * Proper scaling of the board so it doesn't have to be NxN
-* Custom field option
+* ~~Custom field option~~
 * ~~Clock can go past 999~~
 * ~~Keep track of high scores~~
 * High scores are stored on a global leaderboard
@@ -15,5 +15,6 @@ All resources except the icon were created by me however anyone can use them if 
 * Compatible with both Windows and macOS
 
 ### Bugs:
-* 10x10 sometimes only generates 9 mines instead of 10.
+* 10x10 sometimes only generates 9 mines instead of 10
 * Clock will count for one more tick after winning
+* Certain dimensions for a custom game can cause a thin white streak to appear across the board
