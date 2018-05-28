@@ -1,5 +1,6 @@
 package game.windows;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -8,7 +9,6 @@ import game.enums.TileState;
 import game.helper.Debugger;
 import game.helper.Global;
 import game.save_data.SecureDataManager;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -102,26 +102,28 @@ public class Minesweeper {
 				}
 			}
 		}
+		System.out.println(Global.FRAME_WIDTH);
+		System.out.println(Global.TILE_WIDTH);
+		System.out.println(100/(W+2));
+		System.out.println(100.0/(W+2));
+		System.out.println((100/(W+2))*(W+2));
+		System.out.println("----------------------");
 		Debugger.DEBUG_print("Create Field", "W set to " + W, true);
 		Debugger.DEBUG_print("Create Field", "FRAME_WIDTH set to " + Global.FRAME_WIDTH, true);
 		Debugger.DEBUG_print("Create Field", "TILE_WIDTH set to " + Global.TILE_WIDTH, true);
 		Debugger.DEBUG_print("Create Field", "H set to " + H, true);
 		Debugger.DEBUG_print("Create Field", "FRAME_HEIGHT set to " + Global.FRAME_HEIGHT, true);
 		Debugger.DEBUG_print("Create Field", "TILE_HEIGHT set to " + Global.TILE_HEIGHT, true);
-		for(int i = 0; i < W+2; i++) {
-			System.out.println(100/(W+2));
-			System.out.println((W+2)*100);
-			ColumnConstraints column = new ColumnConstraints();
-			column.setPercentWidth(100.0/(W+2));
-			grid.getColumnConstraints().add(column);
-		}
-		System.out.println(Global.TILE_HEIGHT);
-		System.out.println(Global.FRAME_HEIGHT);
-		for(int i = 0; i < H+2; i++) {
-			RowConstraints row = new RowConstraints();
-			row.setPercentHeight(100.0/(H+2));
-			grid.getRowConstraints().add(row);
-		}
+//		for(int i = 0; i < W+2; i++) {
+//			ColumnConstraints column = new ColumnConstraints();
+//			column.setPercentWidth(100/(W+2));
+//			grid.getColumnConstraints().add(column);
+//		}
+//		for(int i = 0; i < H+2; i++) {
+//			RowConstraints row = new RowConstraints();
+//			row.setPercentHeight(100.0/(H+2));
+//			grid.getRowConstraints().add(row);
+//		}
 		grid.setPrefSize(Global.FRAME_WIDTH, Global.FRAME_HEIGHT);
 		grid.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 		

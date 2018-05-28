@@ -119,7 +119,6 @@ public class GameInfo extends VBox {
 						String hS = Global.number.get((time / 100) % 10);
 						String tS = Global.number.get((time / 10) % 10);
 						String oS = Global.number.get(time % 10);
-						//System.out.println(((time / 1000) % 10) + "" + ((time / 100) % 10) + "" + ((time / 10) % 10) + "" + (time % 10));
 						
 						
 						Platform.runLater(() -> grid.add(new ImageView(thS){{
@@ -159,11 +158,11 @@ public class GameInfo extends VBox {
 	 * Generates the tiles in the grid for the HUD
 	 */
 	private void generateGrid() {
-		for(int i = 0; i < W; i++) {
-			ColumnConstraints column = new ColumnConstraints();
-			column.setPercentWidth(100.0/(W+2));
-			grid.getColumnConstraints().add(column);
-		}
+//		for(int i = 0; i < W; i++) {
+//			ColumnConstraints column = new ColumnConstraints();
+//			column.setPercentWidth(100.0/(W+2));
+//			grid.getColumnConstraints().add(column);
+//		}
 		
 		grid.setPrefSize(Global.FRAME_WIDTH, (Global.FRAME_HEIGHT/(H+2))*3);
 		grid.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
