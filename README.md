@@ -17,4 +17,4 @@ All resources except the icon were created by me however anyone can use them if 
 ### Bugs:
 * 10x10 sometimes only generates 9 mines instead of 10
 * Clock will count for one more tick after winning
-* Certain dimensions for a custom game can cause a thin white streak to appear across the board
+* ~~Certain dimensions for a custom game can cause a thin white streak to appear across the board~~
