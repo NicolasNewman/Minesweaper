@@ -102,12 +102,6 @@ public class Minesweeper {
 				}
 			}
 		}
-		System.out.println(Global.FRAME_WIDTH);
-		System.out.println(Global.TILE_WIDTH);
-		System.out.println(100/(W+2));
-		System.out.println(100.0/(W+2));
-		System.out.println((100/(W+2))*(W+2));
-		System.out.println("----------------------");
 		Debugger.DEBUG_print("Create Field", "W set to " + W, true);
 		Debugger.DEBUG_print("Create Field", "FRAME_WIDTH set to " + Global.FRAME_WIDTH, true);
 		Debugger.DEBUG_print("Create Field", "TILE_WIDTH set to " + Global.TILE_WIDTH, true);

@@ -16,7 +16,7 @@ public class Global {
 	public static int TILE_WIDTH;
 	public static int TILE_HEIGHT;
 	
-	public static final String VERSION = "2.0.3";
+	public static final String VERSION = "2.0.4";
 	
 	public static boolean DEBUG_MODE = false;
 	public static final boolean CHEATS_DISABLE_SCORE = false;
@@ -137,6 +137,11 @@ public class Global {
 		return null;
 	}
 	
+	/**
+	 * Shows an error if the user input doesn't match the precondition or an error is thrown
+	 * @param exception label of the error
+	 * @param fix recommended solution to fix the problem
+	 */
 	public static void showError(String exception, String fix) {
 		Debugger.DEBUG_print("Error Event", "Received " + exception + " with " + fix + " as a possible fix", true);
 		Alert error = new Alert(AlertType.ERROR);

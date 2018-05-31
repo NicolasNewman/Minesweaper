@@ -111,22 +111,27 @@ public class Main extends Application {
 			String version = repo.getDescription();
 			boolean versionMatch = version.equals(Global.VERSION) ? true : false;
 			if(!versionMatch) {
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Warning");
-				alert.setContentText("An updated version is available. Would you like to update?");
-				ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
-				ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
-				alert.getButtonTypes().setAll(okButton, noButton);
-	
-				alert.showAndWait().ifPresent(option -> {
-					if(option == ButtonType.OK) {
-						try {
-							Desktop.getDesktop().browse(new URL("https://github.com/NicolasNewman/Minesweeper/releases").toURI());
-						} catch (IOException | URISyntaxException e) {
-							e.printStackTrace();
+				// Verify that your version is behind and not ahead
+				int releaseVersion = Integer.parseInt(version.replace(".", ""));
+				int currentVersion = Integer.parseInt(Global.VERSION.replace(".", ""));
+				if(currentVersion < releaseVersion) {
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("Warning");
+					alert.setContentText("An updated version is available. Would you like to update?");
+					ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+					ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+					alert.getButtonTypes().setAll(okButton, noButton);
+		
+					alert.showAndWait().ifPresent(option -> {
+						if(option == ButtonType.OK) {
+							try {
+								Desktop.getDesktop().browse(new URL("https://github.com/NicolasNewman/Minesweeper/releases").toURI());
+							} catch (IOException | URISyntaxException e) {
+								e.printStackTrace();
+							}
 						}
-					}
-				});
+					});
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
