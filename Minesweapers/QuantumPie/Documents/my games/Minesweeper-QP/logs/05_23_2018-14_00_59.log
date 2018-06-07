@@ -1,0 +1,7 @@
+[14:01:02 Create Field] W set to 10
+[14:01:02 Create Field] FRAME_WIDTH set to 384
+[14:01:02 Create Field] TILE_WIDTH set to 32
+[14:01:02 Create Field] H set to 10
+[14:01:02 Create Field] FRAME_HEIGHT set to 384
+[14:01:02 Create Field] TILE_HEIGHT set to 32
+[14:01:05 Exit Event] Program exiting, saving log

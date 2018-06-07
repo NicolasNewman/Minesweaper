@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Minesweeper.jnlp">
+  <information>
+    <title>Minesweeper</title>
+    <vendor>com.qp.minesweeper</vendor>
+    <description>Minesweeper</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="Minesweeper.jar" size="51931" download="eager" />
+    <jar href="libs\gson-2.8.5-sources.jar" size="156280" download="eager" />
+    <jar href="libs\gson-2.8.5.jar" size="241622" download="eager" />
+    <jar href="libs\org.eclipse.egit.github.core-4.11.0.201803080745-r-sources.jar" size="149546" download="eager" />
+    <jar href="libs\org.eclipse.egit.github.core-4.11.0.201803080745-r.jar" size="220717" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="0" height="0" main-class="application.Main"  name="Minesweeper" />
+  <update check="background"/>
+</jnlp>

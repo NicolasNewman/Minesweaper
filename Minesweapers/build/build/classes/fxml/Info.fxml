@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="224.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.InfoController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="65.0" prefWidth="170.0">
+         <children>
+            <Label text="Created by:" />
+            <Label text="Nicolas N" />
+         </children>
+      </VBox>
+      <Label prefHeight="32.0" prefWidth="223.0" text="To view the project's code, visit:" textAlignment="CENTER" wrapText="true" />
+      <Hyperlink fx:id="infoLink" onAction="#infoLinkClicked" text="https://github.com/NicolasNewman/Minesweeper" wrapText="true" />
+      <VBox prefHeight="166.0" prefWidth="224.0">
+         <children>
+            <CheckBox fx:id="debugCheckbox" mnemonicParsing="false" onAction="#settingDebugChanged" text="Debug Mode" />
+         </children>
+      </VBox>
+   </children>
+</VBox>

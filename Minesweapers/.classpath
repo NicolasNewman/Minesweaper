@@ -13,5 +13,6 @@
 			<attribute name="javadoc_location" value="jar:file:/C:/Users/QuantumPie/Desktop/git/org.eclipse.egit.github.core/target/gson-2.8.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="build/dist/libs"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
