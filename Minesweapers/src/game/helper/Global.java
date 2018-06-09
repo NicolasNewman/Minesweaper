@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import game.save_data.SettingManager;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -16,13 +17,14 @@ public class Global {
 	public static int TILE_WIDTH;
 	public static int TILE_HEIGHT;
 	
-	public static final String VERSION = "2.0.4";
+	public static final String VERSION = "2.1.4";
 	
 	public static boolean DEBUG_MODE = false;
 	public static final boolean CHEATS_DISABLE_SCORE = false;
 	public static final boolean SECURE_DATA = true;
 	
 	public static String bootTime;
+	public static SettingManager settings = new SettingManager();
 	public static DateTimeFormatter fileFormat = DateTimeFormatter.ofPattern("MM_dd_yyyy-HH_mm_ss");
 	public static DateTimeFormatter logFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 	
@@ -33,6 +35,7 @@ public class Global {
 	public final static String DATA_PATH = GAME_DATA_PATH + "data.dat";
 	public final static String IV_PATH = GAME_DATA_PATH + "iv.dat";
 	public final static String KEY_PATH = GAME_DATA_PATH + "key.dat";
+	public final static String SETTING_PATH = GAME_DATA_PATH + "settings.xml";
 	public static String LOG_PATH = GAME_LOG_PATH;
 	
 	public final static String TILE_ONE = "file:resources/images/tile/tile_one.jpg";

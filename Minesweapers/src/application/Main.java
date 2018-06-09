@@ -15,6 +15,7 @@ import org.eclipse.egit.github.core.service.RepositoryService;
 import game.helper.Debugger;
 import game.helper.Global;
 import game.save_data.DataEncrypter;
+import game.save_data.SettingManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -86,9 +87,13 @@ public class Main extends Application {
 			File iv = new File(Global.IV_PATH);
 			File key = new File(Global.KEY_PATH);
 			File data = new File(Global.DATA_PATH);
+			File settings = new File(Global.SETTING_PATH);
 			iv.createNewFile();
 			key.createNewFile();
 			data.createNewFile();
+			if(!settings.createNewFile()) {
+				Global.settings = SettingManager.readFile();
+			}
 			if(Global.DEBUG_MODE) {
 				File log = new File(Global.LOG_PATH);
 				log.createNewFile();

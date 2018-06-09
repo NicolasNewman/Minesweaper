@@ -11,6 +11,7 @@ import javax.xml.bind.JAXBContext;
 import game.helper.Debugger;
 import game.helper.Global;
 import game.save_data.SecureDataManager;
+import game.save_data.SettingManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
@@ -21,7 +22,12 @@ public class InfoController {
 	@FXML CheckBox debugCheckbox;
 	
 	public InfoController() {
-		
+
+	}
+	
+	@FXML
+	public void initialize() {
+		debugCheckbox.setSelected(Global.settings.getDebugMode());
 	}
 	
 	public void infoLinkClicked() {
@@ -37,6 +43,8 @@ public class InfoController {
 	public void settingDebugChanged() {
 		if(debugCheckbox.isSelected()) {
 			Global.DEBUG_MODE = true;
+			Global.settings.setDebugMode(true);
+			SettingManager.writeFile(Global.settings);
 			try {
 				File log = new File(Global.LOG_PATH);
 				Debugger.DEBUG_print("Setting Event", "DEBUG_MODE is now " + Global.DEBUG_MODE + ". Should be true", true);
@@ -50,6 +58,8 @@ public class InfoController {
 			}
 		} else {
 			Global.DEBUG_MODE = false;
+			Global.settings.setDebugMode(false);
+			SettingManager.writeFile(Global.settings);
 			Debugger.DEBUG_print("Setting Event", "DEBUG_MODE is now " + Global.DEBUG_MODE + ". Should be false", true);
 		}
 	}

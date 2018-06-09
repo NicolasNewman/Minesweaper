@@ -55,36 +55,6 @@ public class Minesweeper {
 		stage = new Stage();
 		stage.setTitle("Minesweeper");
 		
-//		TextInputDialog lengthDialog = new TextInputDialog("10");
-//		lengthDialog.setTitle("Length");
-//		lengthDialog.setHeaderText("Please enter the length of the field");
-//		lengthDialog.setContentText("Length:");
-//					
-//		Optional<String> lengthResult = lengthDialog.showAndWait();
-//		lengthResult.ifPresent(letter -> {
-//			H = Integer.parseInt(letter);
-//		});
-//		
-//		TextInputDialog widthDialog = new TextInputDialog("10");
-//		widthDialog.setTitle("Width");
-//		widthDialog.setHeaderText("Please enter the width of the field");
-//		widthDialog.setContentText("Width:");
-//					
-//		Optional<String> widthResult = widthDialog.showAndWait();
-//		widthResult.ifPresent(letter -> {
-//			W = Integer.parseInt(letter);
-//		});
-//		
-//		TextInputDialog densityDialog = new TextInputDialog("10");
-//		densityDialog.setTitle("Percent");
-//		densityDialog.setHeaderText("Please enter the percent of field that should be mines");
-//		densityDialog.setContentText("Percent:");
-//		
-//		Optional<String> densityResult = densityDialog.showAndWait();
-//		densityResult.ifPresent(letter -> {
-//			tempMineCount = Double.parseDouble(letter);
-//		});
-		
 		mineCount = (int) ((W*H) * (tempMineCount/100.0));
 
 		flagsRemaining = mineCount;
